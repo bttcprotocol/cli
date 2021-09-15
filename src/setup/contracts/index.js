@@ -10,7 +10,7 @@ export class Contracts {
     this.config = config
 
     this.repositoryName = 'contracts'
-    this.repositoryBranch = options.repositoryBranch || 'master'
+    this.repositoryBranch = options.repositoryBranch || 'stake'
     this.repositoryUrl = options.repositoryUrl || 'http://39.106.174.213/BitTorrentChain/contracts'
   }
 

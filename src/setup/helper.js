@@ -54,7 +54,7 @@ export async function getDefaultBranch(options = {}) {
       type: 'input',
       name: 'borBranch',
       message: 'Please enter Bor branch or tag',
-      default: 'v0.2.7'
+      default: 'v0.2.8'
     })
   }
 
@@ -72,7 +72,7 @@ export async function getDefaultBranch(options = {}) {
       type: 'input',
       name: 'contractsBranch',
       message: 'Please enter Contracts branch or tag',
-      default: 'master'
+      default: 'stake'
     })
   }
 

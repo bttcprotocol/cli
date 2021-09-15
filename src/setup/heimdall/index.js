@@ -25,7 +25,7 @@ export class Heimdall {
 
     this.repositoryName = this.name
     this.repositoryBranch = options.repositoryBranch || 'master'
-    this.repositoryUrl = options.repositoryUrl || 'http://39.106.174.213/BitTorrentChain/heimdall'
+    this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/heimdall'
   }
 
   get name() {
