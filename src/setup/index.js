@@ -4,7 +4,7 @@ import heimdall from './heimdall'
 import genesis from './genesis'
 import bor from './bor'
 import localnet from './localnet'
-import ganache from './ganache'
+//import ganache from './ganache'
 import devnet from './devnet'
 
 //
@@ -19,8 +19,8 @@ genesisCmd.action(genesis)
 const borCmd = new Command('bor')
 borCmd.action(bor)
 
-const ganacheCmd = new Command('ganache')
-ganacheCmd.action(ganache)
+// const ganacheCmd = new Command('ganache')
+// ganacheCmd.action(ganache)
 
 const localnetCmd = new Command('localnet')
 localnetCmd.action(localnet)
@@ -28,4 +28,4 @@ localnetCmd.action(localnet)
 const devnetCmd = new Command('devnet')
 devnetCmd.action(devnet)
 
-export default [heimdallCmd, genesisCmd, borCmd, ganacheCmd, localnetCmd, devnetCmd]
+export default [heimdallCmd, genesisCmd, borCmd, localnetCmd, devnetCmd]

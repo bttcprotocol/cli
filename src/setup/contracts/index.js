@@ -11,7 +11,7 @@ export class Contracts {
 
     this.repositoryName = 'contracts'
     this.repositoryBranch = options.repositoryBranch || 'master'
-    this.repositoryUrl = options.repositoryUrl || 'https://github.com/maticnetwork/contracts'
+    this.repositoryUrl = options.repositoryUrl || 'http://39.106.174.213/BitTorrentChain/contracts'
   }
 
   get name() {

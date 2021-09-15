@@ -8,24 +8,24 @@ import { loadConfig } from '../config'
 
 import { Genesis } from '../genesis'
 import { Heimdall } from '../heimdall'
-import { Ganache } from '../ganache'
+//import { Ganache } from '../ganache'
 import { Bor } from '../bor'
 import { processTemplateFiles } from '../../lib/utils'
 
 async function setupLocalnet(config) {
-  const ganache = new Ganache(config, { contractsBranch: config.contractsBranch })
+  //const ganache = new Ganache(config, { contractsBranch: config.contractsBranch })
   const bor = new Bor(config, { repositoryBranch: config.borBranch })
   const heimdall = new Heimdall(config, { repositoryBranch: config.heimdallBranch })
   const genesis = new Genesis(config, { repositoryBranch: 'master' })
 
   const tasks = new Listr(
     [
-      {
-        title: ganache.taskTitle,
-        task: () => {
-          return ganache.getTasks()
-        }
-      },
+      // {
+      //   title: ganache.taskTitle,
+      //   task: () => {
+      //     return ganache.getTasks()
+      //   }
+      // },
       {
         title: heimdall.taskTitle,
         task: () => {

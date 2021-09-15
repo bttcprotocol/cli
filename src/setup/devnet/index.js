@@ -8,7 +8,7 @@ import nunjucks from 'nunjucks'
 import { toBuffer, privateToPublic, bufferToHex } from 'ethereumjs-util'
 
 import { Heimdall } from '../heimdall'
-import { Ganache } from '../ganache'
+//import { Ganache } from '../ganache'
 import { Genesis } from '../genesis'
 import { printDependencyInstructions, getDefaultBranch } from '../helper'
 import { getNewPrivateKey, getKeystoreFile, processTemplateFiles, getAccountFromPrivateKey } from '../../lib/utils'
@@ -200,7 +200,7 @@ export class Devnet {
           await fs.copy(path.join(templateDir, 'docker'), this.config.targetDirectory)
 
           // process template files
-          await processTemplateFiles(this.config.targetDirectory, { obj: this, ganache: this.ganache })
+          await processTemplateFiles(this.config.targetDirectory, { obj: this})
         }
       }
     ]
@@ -305,7 +305,7 @@ export class Devnet {
   }
 
   async getTasks() {
-    const ganache = this.ganache
+    //const ganache = this.ganache
     const heimdall = this.heimdall
     const genesis = this.genesis
 
@@ -382,15 +382,15 @@ export class Devnet {
             }
           }
         },
-        {
-          title: ganache.taskTitle,
-          task: () => {
-            return ganache.getTasks()
-          },
-          enabled: () => {
-            return this.config.devnetType === 'docker'
-          }
-        },
+        // {
+        //   title: ganache.taskTitle,
+        //   task: () => {
+        //     return ganache.getTasks()
+        //   },
+        //   enabled: () => {
+        //     return this.config.devnetType === 'docker'
+        //   }
+        // },
         {
           title: 'Docker',
           task: async () => {
@@ -418,7 +418,7 @@ export class Devnet {
 
 async function setupDevnet(config) {
   const devnet = new Devnet(config)
-  devnet.ganache = new Ganache(config, { contractsBranch: config.contractsBranch })
+  //devnet.ganache = new Ganache(config, { contractsBranch: config.contractsBranch })
   devnet.heimdall = new Heimdall(config, { repositoryBranch: config.heimdallBranch })
   devnet.genesis = new Genesis(config, { repositoryBranch: 'master' })
 
@@ -487,7 +487,7 @@ export default async function () {
       type: 'input',
       name: 'ethURL',
       message: 'Please enter ETH url',
-      default: 'http://ganache:9545'
+      default: ''
     })
   }
 

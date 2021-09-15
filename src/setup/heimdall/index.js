@@ -9,7 +9,7 @@ import fileReplacer from '../../lib/file-replacer'
 import { loadConfig } from '../config'
 import { cloneRepository, privateKeyToPublicKey, compressedPublicKey, processTemplateFiles } from '../../lib/utils'
 import { printDependencyInstructions, getDefaultBranch } from '../helper'
-import { Ganache } from '../ganache'
+//import { Ganache } from '../ganache'
 
 // repository name
 export const REPOSITORY_NAME = 'heimdall'
@@ -25,7 +25,7 @@ export class Heimdall {
 
     this.repositoryName = this.name
     this.repositoryBranch = options.repositoryBranch || 'master'
-    this.repositoryUrl = options.repositoryUrl || 'https://github.com/maticnetwork/heimdall'
+    this.repositoryUrl = options.repositoryUrl || 'http://39.106.174.213/BitTorrentChain/heimdall'
   }
 
   get name() {
@@ -56,6 +56,9 @@ export class Heimdall {
     return path.join(this.buildDir, 'heimdalld')
   }
 
+  get heimdalldCli() {
+    return path.join(this.buildDir, 'heimdallcli')
+  }
   get heimdallDataDir() {
     return path.join(this.config.dataDir, this.name)
   }
@@ -111,7 +114,7 @@ export class Heimdall {
 
   // returns content of validator key
   async generateValidatorKey() {
-    return execa(this.heimdalldCmd, ['generate-validatorkey', this.config.primaryAccount.privateKey, '--home', this.heimdallDataDir], {
+    return execa(this.heimdalldCli, ['generate-validatorkey', this.config.primaryAccount.privateKey, '--home', this.heimdallDataDir], {
       cwd: this.config.configDir
     }).then(() => {
       return require(this.configValidatorKeyFilePath)
@@ -188,7 +191,7 @@ export class Heimdall {
         {
           title: 'Init Heimdall',
           task: () => {
-            return execa(this.heimdalldCmd, ['init', '--home', this.heimdallDataDir, '--chain-id', this.heimdallChainId, 'heimdall-test'], {
+            return execa(this.heimdalldCmd, ['init', '--home', this.heimdallDataDir, '--chain-id', this.heimdallChainId], {
               cwd: this.repositoryDir
             })
           }
@@ -242,17 +245,17 @@ export class Heimdall {
 }
 
 async function setupHeimdall(config) {
-  const ganache = new Ganache(config, { contractsBranch: config.contractsBranch })
+  //const ganache = new Ganache(config, { contractsBranch: config.contractsBranch })
   const heimdall = new Heimdall(config, { repositoryBranch: config.heimdallBranch })
 
   // get all heimdall related tasks
   const tasks = new Listr([
-    {
-      title: ganache.taskTitle,
-      task: () => {
-        return ganache.getTasks()
-      }
-    },
+    // {
+    //   title: ganache.taskTitle,
+    //   task: () => {
+    //     return ganache.getTasks()
+    //   }
+    // },
     {
       title: heimdall.taskTitle,
       task: () => {
@@ -268,7 +271,7 @@ async function setupHeimdall(config) {
 
   // print details
   await config.print()
-  await ganache.print()
+  //await ganache.print()
   await heimdall.print()
 
   return true
