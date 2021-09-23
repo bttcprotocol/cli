@@ -73,7 +73,6 @@ async function setupLocalnet(config) {
 
   await genesis.print()
   await heimdall.print()
-  await genesis.print()
   await bor.print()
 }
 

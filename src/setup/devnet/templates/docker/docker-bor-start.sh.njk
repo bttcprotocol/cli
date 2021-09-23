@@ -31,6 +31,7 @@ bor --datadir $DATA_DIR \
   --networkid '{{ obj.config.borChainId }}' \
   --miner.gaslimit '2000000000' \
   --txpool.nolocals \
+  --rpc.allow-unprotected-txs \
   --txpool.accountslots '128' \
   --txpool.globalslots '20000' \
   --txpool.lifetime '0h16m0s' \

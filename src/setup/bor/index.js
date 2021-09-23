@@ -65,6 +65,7 @@ export class Bor {
     console.log(chalk.gray('Setup bor chain') + ': ' + chalk.bold.green('bash bor-setup.sh'))
     console.log(chalk.gray('Start bor chain') + ': ' + chalk.bold.green('bash bor-start.sh'))
     console.log(chalk.gray('Clean bor chain') + ': ' + chalk.bold.green('bash bor-clean.sh'))
+    console.log(chalk.gray('config.dataDir') + ': ' + chalk.bold.green(this.config.dataDir))
   }
 
   async getTasks() {

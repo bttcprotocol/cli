@@ -8,15 +8,6 @@ networks:
         - subnet: 172.20.1.0/24
 
 services:
-  ganache:
-    image: "trufflesuite/ganache-cli:latest"
-    container_name: ganache
-    networks:
-      - devnet-network
-    volumes:
-      - ./data:/root/data
-    ports:
-      - "9545:9545"
 
 {% for node in range(0, obj.totalNodes) %}
   rabbit{{ node }}:
@@ -34,6 +25,7 @@ services:
       - devnet-network
     volumes:
       - ./devnet/node{{ node }}/heimdalld:/root/.heimdalld
+      - ./devnet/node{{ node }}/heimdallcli:/root/.heimdallcli
       - ./logs/node{{ node }}/heimdall:/root/heimdall/logs
     {% if node == 0 %}
     ports:
