@@ -138,9 +138,9 @@ export class Heimdall {
           fileReplacer(this.heimdallGenesisFilePath)
             .replace(/"address":[ ]*".*"/gi, `"address": "${this.config.primaryAccount.address}"`)
             .replace(/"signer":[ ]*".*"/gi, `"signer": "${this.config.primaryAccount.address}"`)
-            .replace(/"pub_key":[ ]*".*"/gi, `"pub_key": "${compressedPublicKey(privateKeyToPublicKey(this.config.primaryAccount.privateKey).replace('0x', '0x04'))}"`)
+            .replace(/"pubKey":[ ]*".*"/gi, `"pubKey": "${privateKeyToPublicKey(this.config.primaryAccount.privateKey).replace('0x', '0x04')}"`)
             .replace(/"power":[ ]*".*"/gi, `"power": "${this.config.defaultStake}"`)
-            .replace(/"user":[ ]*".*"/gi, `"user": "${this.config.primaryAccount.address}"`)
+            //.replace(/"user":[ ]*".*"/gi, `"user": "${this.config.primaryAccount.address}"`)
             .save()
         }
       },
