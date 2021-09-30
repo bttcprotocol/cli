@@ -20,10 +20,10 @@ export class Genesis {
 
     this.repositoryName = this.name
     this.repositoryBranch = options.repositoryBranch || 'master'
-    this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/genesis-contracts.git'
-    //this.repositoryUrl = options.repositoryUrl || 'https://github.com/maticnetwork/genesis-contracts.git'
-    this.maticContractsRepository = 'bttc-contracts'
-    this.maticContractsRepositoryUrl = 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/bttc-contracts.git'
+    //this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/genesis-contracts.git'
+    this.repositoryUrl = options.repositoryUrl || 'https://github.com/maticnetwork/genesis-contracts.git'
+    this.maticContractsRepository = 'matic-contracts'
+    this.maticContractsRepositoryUrl = 'https://github.com/maticnetwork/BitTorrentChain/contracts.git'
   }
 
   get name() {
