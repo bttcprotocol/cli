@@ -2,7 +2,8 @@
 
 set -x #echo on
 
-HEIMDALL_HOME_DIR={{ obj.heimdallDataDir }}
-BUILD_DIR={{ obj.buildDir }}
+NODE_DIR=
+HEIMDALL_HOME_DIR=$NODE_DIR/heimdalld
+BUILD_DIR=$NODE_DIR/code/heimdall/build
 
-$BUILD_DIR/bridge --home $HEIMDALL_HOME_DIR start --all
+$BUILD_DIR/bridge --home $HEIMDALL_HOME_DIR start --all --node http://0.0.0.0:tcp_port

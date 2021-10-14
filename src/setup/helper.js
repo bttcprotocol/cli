@@ -76,6 +76,15 @@ export async function getDefaultBranch(options = {}) {
     })
   }
 
+  if (!options.nodeDir) {
+    questions.push({
+      type: 'input',
+      name: 'nodeDir',
+      message: 'Please enter node dir',
+      default: '/data/workspace/localnet/node'
+    })
+  }
+
   // return if no questions
   if (questions.length === 0) {
     return {}

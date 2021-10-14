@@ -18,7 +18,7 @@ import fileReplacer from '../../lib/file-replacer'
 export class Devnet {
   constructor(config, options = {}) {
     this.config = config
-  }
+}
 
   get testnetDir() {
     return path.join(this.config.targetDirectory, 'devnet')
@@ -36,6 +36,10 @@ export class Devnet {
     return this.config.numOfValidators + this.config.numOfNonValidators
   }
 
+  get heimdallBuildDir() {
+    return path.join(this.config.targetDirectory, 'code/heimdall/build')
+  }
+
   nodeDir(index) {
     return path.join(this.testnetDir, `node${index}`)
   }
@@ -46,6 +50,26 @@ export class Devnet {
 
   heimdallConfigFilePath(index) {
     return path.join(this.heimdallDir(index), 'config', 'config.toml')
+  }
+
+  heimdallStartShellFilePath(index) {
+    return path.join(this.nodeDir(index), 'heimdall-start.sh')
+  }
+  rabbitDockerFilePath(index) {
+    return path.join(this.nodeDir(index), 'docker-compose.yml')
+  }
+  heimdallServerStartShellFilePath(index) {
+    return path.join(this.nodeDir(index), 'heimdall-server-start.sh')
+  }
+  heimdallBridgeStartShellFilePath(index) {
+    return path.join(this.nodeDir(index), 'heimdall-bridge-start.sh')
+  }
+
+  borStartShellFilePath(index) {
+    return path.join(this.nodeDir(index), 'bor-start.sh')
+  }
+  borSetupShellFilePath(index) {
+    return path.join(this.nodeDir(index), 'bor-setup.sh')
   }
 
   heimdallGenesisFilePath(index) {
@@ -112,7 +136,7 @@ export class Devnet {
           const pubKey = bufferToHex(privateToPublic(toBuffer(enodeObj.privateKey))).replace('0x', '')
 
           // draft enode
-          const enode = `enode://${pubKey}@${this.config.devnetBorHosts[i]}:30303`
+          const enode = `enode://${pubKey}@${this.config.devnetBorHosts[i]}:3030${i}`
 
           // add into static nodes
           staticNodes.push(enode)
@@ -217,8 +241,11 @@ export class Devnet {
           for (let i = 0; i < this.totalNodes; i++) {
             fileReplacer(this.heimdallHeimdallConfigFilePath(i))
               .replace(/eth_rpc_url[ ]*=[ ]*".*"/gi, `eth_rpc_url = "${this.config.ethURL}"`)
-              .replace(/bor_rpc_url[ ]*=[ ]*".*"/gi, 'bor_rpc_url = "http://localhost:8545"')
+              .replace(/bor_rpc_url[ ]*=[ ]*".*"/gi, `bor_rpc_url = "http://localhost:854${i}"`)
               .replace(/amqp_url[ ]*=[ ]*".*"/gi, 'amqp_url = "amqp://guest:guest@localhost:5672/"')
+              .replace(/26657/gi, `2664${i}`)
+              .replace(/1317/gi, `131${i}`)
+              .replace(/5672/gi, `567${i}`)
               .save()
           }
         }
@@ -231,7 +258,7 @@ export class Devnet {
             '../templates'
           )
 
-          // copy remote related templates
+          // copy remote related templates    
           await fs.copy(path.join(templateDir, 'remote'), this.config.targetDirectory)
 
           // promises
@@ -251,17 +278,54 @@ export class Devnet {
                 )
               }
 
+
               // remove njk file
               p.push(execa('rm', ['-rf', fp], {
                 cwd: this.config.targetDirectory
               }))
             }
           })
-
+          for (let i = 0; i < this.totalNodes; i++) {
+            fileReplacer(this.heimdallStartShellFilePath(i))
+            .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
+            .save()
+            fileReplacer(this.heimdallServerStartShellFilePath(i))
+            .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
+            .replace(/rpc_port/gi, `131${i}`)
+            .replace(/tcp_port/gi, `2664${i}`)
+            .save()
+            fileReplacer(this.heimdallBridgeStartShellFilePath(i))
+            .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
+            .replace(/tcp_port/gi, `2664${i}`)
+            .save()
+            fileReplacer(this.borStartShellFilePath(i))
+            .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
+            .replace(/BOR_CHAIN_ID=/gi, `BOR_CHAIN_ID=${this.config.borChainId}`) 
+            .replace(/1317/gi, `131${i}`)
+            .replace(/8545/gi, `854${i}`)
+            .replace(/7071/gi, `707${i}`)
+            .replace(/30303/gi, `3030${i}`)
+            .save()
+            fileReplacer(this.borSetupShellFilePath(i))
+            .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
+            .save()   
+            fileReplacer(this.rabbitDockerFilePath(i))
+            .replace(/rabbit0/gi, `rabbit${i}`)
+            .replace(/5672:5672/gi, `567${i}:5672`)
+            .replace(/172.20.1.0/gi, `172.20.1${i}.0`)
+            .save()   
+            
+            fileReplacer(this.borStaticNodesPath(i))
+            .replace(/30303/gi, (d, index) => {
+              return `3030${index}`
+            }) 
+            .save()   
+          }
           // fulfill all promises
           await Promise.all(p)
         }
       }
+      
     ]
   }
 
@@ -289,11 +353,19 @@ export class Devnet {
           // set heimdall peers with devnet heimdall hosts
           for (let i = 0; i < this.totalNodes; i++) {
             fileReplacer(this.heimdallConfigFilePath(i))
-              .replace(/heimdall([^:]+):/gi, (d, index) => {
-                return `${this.config.devnetHeimdallHosts[index]}:`
-              })
-              .replace(/moniker.+=.+/gi, `moniker = "heimdall${i}"`)
-              .save()
+            .replace(/heimdall([^:]+)/gi, (d, index) => {
+              return `${this.config.devnetHeimdallHosts[index]}`
+            })  
+            .replace(/1:26656/gi, `1:26651`)
+
+            .replace(/moniker.+=.+/gi, `moniker = "heimdall${i}"`)
+            .replace(/proxy_app.+=.+/gi, `proxy_app = "tcp://127.0.0.1:2663${i}"`)
+            .replace(/localhost:6060/gi, `localhost:606${i}`)
+            .replace(/26657/gi, `2664${i}`)
+            .replace(/26656/gi, `2665${i}`)
+            .replace(/prometheus_listen_addr.+=.+/gi, `prometheus_listen_addr = ":2666${i}"`)  
+            .save()
+
 
             fileReplacer(this.heimdallGenesisFilePath(i))
               .replace(/"bor_chain_id"[ ]*:[ ]*".*"/gi, `"bor_chain_id": "${this.config.borChainId}"`)
