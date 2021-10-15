@@ -76,6 +76,7 @@ export async function getDefaultBranch(options = {}) {
     })
   }
 
+  /*
   if (!options.nodeDir) {
     questions.push({
       type: 'input',
@@ -84,7 +85,8 @@ export async function getDefaultBranch(options = {}) {
       default: '/data/workspace/localnet/node'
     })
   }
-
+  */
+ 
   // return if no questions
   if (questions.length === 0) {
     return {}

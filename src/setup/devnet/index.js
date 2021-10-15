@@ -136,7 +136,8 @@ export class Devnet {
           const pubKey = bufferToHex(privateToPublic(toBuffer(enodeObj.privateKey))).replace('0x', '')
 
           // draft enode
-          const enode = `enode://${pubKey}@${this.config.devnetBorHosts[i]}:3030${i}`
+          //const enode = `enode://${pubKey}@${this.config.devnetBorHosts[i]}:3030${i}`
+          const enode = `enode://${pubKey}@${this.config.devnetBorHosts[i]}:30303`
 
           // add into static nodes
           staticNodes.push(enode)
@@ -183,7 +184,7 @@ export class Devnet {
           for (let i = 0; i < this.totalNodes; i++) {
             fileReplacer(this.heimdallHeimdallConfigFilePath(i))
               .replace(/eth_rpc_url[ ]*=[ ]*".*"/gi, `eth_rpc_url = "${this.config.ethURL}"`)
-              .replace(/bor_rpc_url[ ]*=[ ]*".*"/gi, `bor_rpc_url = "http://bor${i}:8545"`)
+              //.replace(/bor_rpc_url[ ]*=[ ]*".*"/gi, `bor_rpc_url = "http://bor${i}:8545"`)
               .replace(/amqp_url[ ]*=[ ]*".*"/gi, `amqp_url = "amqp://guest:guest@rabbit${i}:5672/"`)
               .replace(/span_poll_interval[ ]*=[ ]*".*"/gi, 'span_poll_interval = "0m15s"')
               .replace(/checkpoint_poll_interval[ ]*=[ ]*".*"/gi, 'checkpoint_poll_interval = "1m0s"')
@@ -243,9 +244,9 @@ export class Devnet {
               .replace(/eth_rpc_url[ ]*=[ ]*".*"/gi, `eth_rpc_url = "${this.config.ethURL}"`)
               .replace(/bor_rpc_url[ ]*=[ ]*".*"/gi, `bor_rpc_url = "http://localhost:854${i}"`)
               .replace(/amqp_url[ ]*=[ ]*".*"/gi, 'amqp_url = "amqp://guest:guest@localhost:5672/"')
-              .replace(/26657/gi, `2664${i}`)
-              .replace(/1317/gi, `131${i}`)
-              .replace(/5672/gi, `567${i}`)
+              //.replace(/26657/gi, `2664${i}`)
+              //.replace(/1317/gi, `131${i}`)
+              //.replace(/5672/gi, `567${i}`)
               .save()
           }
         }
@@ -286,6 +287,7 @@ export class Devnet {
             }
           })
           for (let i = 0; i < this.totalNodes; i++) {
+            /*
             fileReplacer(this.heimdallStartShellFilePath(i))
             .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
             .save()
@@ -298,14 +300,16 @@ export class Devnet {
             .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
             .replace(/tcp_port/gi, `2664${i}`)
             .save()
+            */
             fileReplacer(this.borStartShellFilePath(i))
-            .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
+            //.replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
             .replace(/BOR_CHAIN_ID=/gi, `BOR_CHAIN_ID=${this.config.borChainId}`) 
-            .replace(/1317/gi, `131${i}`)
-            .replace(/8545/gi, `854${i}`)
-            .replace(/7071/gi, `707${i}`)
-            .replace(/30303/gi, `3030${i}`)
+            //.replace(/1317/gi, `131${i}`)
+            //.replace(/8545/gi, `854${i}`)
+            //.replace(/7071/gi, `707${i}`)
+            //.replace(/30303/gi, `3030${i}`)
             .save()
+            /*
             fileReplacer(this.borSetupShellFilePath(i))
             .replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
             .save()   
@@ -320,7 +324,9 @@ export class Devnet {
               return `3030${index}`
             }) 
             .save()   
+            */
           }
+          
           // fulfill all promises
           await Promise.all(p)
         }
@@ -356,16 +362,18 @@ export class Devnet {
             .replace(/heimdall([^:]+)/gi, (d, index) => {
               return `${this.config.devnetHeimdallHosts[index]}`
             })  
-            .replace(/1:26656/gi, `1:26651`)
-
+            /*
             .replace(/moniker.+=.+/gi, `moniker = "heimdall${i}"`)
             .replace(/proxy_app.+=.+/gi, `proxy_app = "tcp://127.0.0.1:2663${i}"`)
             .replace(/localhost:6060/gi, `localhost:606${i}`)
             .replace(/26657/gi, `2664${i}`)
-            .replace(/26656/gi, `2665${i}`)
+            .replace(/0.0.0.0:26656/gi, `0.0.0.0:2665${i}`)
+            .replace(/:26656/gi, (d, index) => {
+              return `:2665${index}`
+            })  
             .replace(/prometheus_listen_addr.+=.+/gi, `prometheus_listen_addr = ":2666${i}"`)  
+*/
             .save()
-
 
             fileReplacer(this.heimdallGenesisFilePath(i))
               .replace(/"bor_chain_id"[ ]*:[ ]*".*"/gi, `"bor_chain_id": "${this.config.borChainId}"`)

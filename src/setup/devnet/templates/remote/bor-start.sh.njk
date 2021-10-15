@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-NODE_DIR=
+NODE_DIR=/data/workspaces/localnet/node
 BOR_HOME=$NODE_DIR/bor
 BOR_DATA_DIR=$BOR_HOME/data
 BOR_CHAIN_ID=
@@ -23,12 +23,16 @@ bttc --datadir $BOR_DATA_DIR \
   --http.api 'eth,net,web3,txpool,bor' \
   --syncmode 'full' \
   --networkid $BOR_CHAIN_ID \
+  --miner.gasprice '30000000000' \
   --miner.gaslimit '20000000' \
+  --miner.gastarget '20000000' \
   --rpc.allow-unprotected-txs \
   --txpool.nolocals \
-  --txpool.accountslots '128' \
-  --txpool.globalslots '20000'  \
-  --txpool.lifetime '0h16m0s' \
+  --txpool.accountslots 16 \
+  --txpool.globalslots 131072 \
+  --txpool.accountqueue 64 \
+  --txpool.globalqueue 131072 \
+  --txpool.lifetime '1h30m0s' \
   --maxpeers 200 \
   --metrics \
   --pprof --pprof.port 7071 --pprof.addr '0.0.0.0' \
