@@ -362,9 +362,9 @@ export class Devnet {
             .replace(/heimdall([^:]+)/gi, (d, index) => {
               return `${this.config.devnetHeimdallHosts[index]}`
             })  
-            /*
+            
             .replace(/moniker.+=.+/gi, `moniker = "heimdall${i}"`)
-            .replace(/proxy_app.+=.+/gi, `proxy_app = "tcp://127.0.0.1:2663${i}"`)
+            /*.replace(/proxy_app.+=.+/gi, `proxy_app = "tcp://127.0.0.1:2663${i}"`)
             .replace(/localhost:6060/gi, `localhost:606${i}`)
             .replace(/26657/gi, `2664${i}`)
             .replace(/0.0.0.0:26656/gi, `0.0.0.0:2665${i}`)
@@ -372,7 +372,7 @@ export class Devnet {
               return `:2665${index}`
             })  
             .replace(/prometheus_listen_addr.+=.+/gi, `prometheus_listen_addr = ":2666${i}"`)  
-*/
+            */
             .save()
 
             fileReplacer(this.heimdallGenesisFilePath(i))
