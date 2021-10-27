@@ -53,11 +53,11 @@ export class Heimdall {
   }
 
   get heimdalldCmd() {
-    return path.join(this.buildDir, 'heimdalld')
+    return path.join(this.buildDir, 'deliveryd')
   }
 
   get heimdalldCli() {
-    return path.join(this.buildDir, 'heimdallcli')
+    return path.join(this.buildDir, 'deliverycli')
   }
   get heimdallDataDir() {
     return path.join(this.config.dataDir, this.name)
