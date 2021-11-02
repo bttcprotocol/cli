@@ -12,7 +12,7 @@ import { cloneRepository } from '../../lib/utils'
 import { printDependencyInstructions } from '../helper'
 
 // balance
-const DEFAULT_BALANCE = 1000
+const DEFAULT_BALANCE = 300000000
 
 export class Genesis {
   constructor(config, options = {}) {
@@ -21,9 +21,10 @@ export class Genesis {
     this.repositoryName = this.name
     this.repositoryBranch = options.repositoryBranch || 'master'
     this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/genesis-contracts.git'
-    //this.repositoryUrl = options.repositoryUrl || 'https://github.com/maticnetwork/genesis-contracts.git'
+    //this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/contracts.git'
     this.maticContractsRepository = 'bttc-contracts'
-    this.maticContractsRepositoryUrl = 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/contracts.git'
+    this.maticContractsRepositoryUrl = 'https://github.com/bttcprotocol/contracts.git'
+
   }
 
   get name() {
@@ -88,12 +89,12 @@ export class Genesis {
             cwd: this.maticContractDir
           })
         },
-        {
-          title: 'Compile matic-contracts',
-          task: () => execa('npm', ['run', 'truffle:compile'], {
-            cwd: this.maticContractDir
-          })
-        },
+        // {
+        //   title: 'Compile matic-contracts',
+        //   task: () => execa('npm', ['run', 'truffle:compile'], {
+        //     cwd: this.maticContractDir
+        //   })
+        // },
         {
           title: 'Prepare validators for genesis file',
           task: () => {
