@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -x #echo on
+NODE_DIR=/data/bttc/node
+HEIMDALL_HOME_DIR=$NODE_DIR/heimdalld
+
+deliveryd --home $HEIMDALL_HOME_DIR unsafe-reset-all
+bridge --home $HEIMDALL_HOME_DIR purge-queue
+rm -rf $HEIMDALL_HOME_DIR/bridge
