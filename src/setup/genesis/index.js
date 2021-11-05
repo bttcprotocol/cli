@@ -19,11 +19,12 @@ export class Genesis {
     this.config = config
 
     this.repositoryName = this.name
-    this.repositoryBranch = options.repositoryBranch || 'master'
+    this.repositoryBranch ='master'
     this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/genesis-contracts.git'
     //this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/contracts.git'
     this.maticContractsRepository = 'bttc-contracts'
     this.maticContractsRepositoryUrl = 'https://github.com/bttcprotocol/contracts.git'
+    this.bttcrepositoryBranch = config.contractsBranch || 'stake'
 
   }
 
@@ -59,6 +60,7 @@ export class Genesis {
           title: 'Clone genesis-contracts repository',
           task: () => cloneRepository(this.repositoryName, this.repositoryBranch, this.repositoryUrl, this.config.codeDir)
         },
+
         {
           title: 'Install dependencies for genesis-contracts',
           task: () => projectInstall({
@@ -75,6 +77,12 @@ export class Genesis {
           title: 'Update sub-modules',
           task: () => execa('git', ['submodule', 'update'], {
             cwd: this.repositoryDir
+          })
+        },
+        {
+          title: 'change bttc-contracts branch',
+          task: () => execa('git', ['checkout', this.bttcrepositoryBranch], {
+            cwd: this.maticContractDir
           })
         },
         {
