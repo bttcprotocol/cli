@@ -23,7 +23,7 @@ export async function getChainIds(options = {}) {
     questions.push({
       type: 'input',
       name: 'borChainId',
-      message: 'Please enter Bor chain id',
+      message: 'Please enter Bttc chain id',
       default: '15001'
     })
   }
@@ -32,8 +32,8 @@ export async function getChainIds(options = {}) {
     questions.push({
       type: 'input',
       name: 'heimdallChainId',
-      message: 'Please enter Heimdall chain id',
-      default: 'heimdall-15001'
+      message: 'Please enter Delivery chain id',
+      default: 'delivery-15001'
     })
   }
 
@@ -53,7 +53,7 @@ export async function getDefaultBranch(options = {}) {
     questions.push({
       type: 'input',
       name: 'borBranch',
-      message: 'Please enter Bor branch or tag',
+      message: 'Please enter Bttc branch or tag',
       default: 'v0.2.8'
     })
   }
@@ -62,7 +62,7 @@ export async function getDefaultBranch(options = {}) {
     questions.push({
       type: 'input',
       name: 'heimdallBranch',
-      message: 'Please enter Heimdall branch or tag',
+      message: 'Please enter Delivery branch or tag',
       default: 'master'
     })
   }

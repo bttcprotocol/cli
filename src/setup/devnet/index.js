@@ -37,7 +37,7 @@ export class Devnet {
   }
 
   get heimdallBuildDir() {
-    return path.join(this.config.targetDirectory, 'code/heimdall/build')
+    return path.join(this.config.targetDirectory, 'code/delivery/build')
   }
 
   nodeDir(index) {
@@ -45,7 +45,7 @@ export class Devnet {
   }
 
   heimdallDir(index) {
-    return path.join(this.nodeDir(index), 'heimdalld')
+    return path.join(this.nodeDir(index), 'deliveryd')
   }
 
   heimdallConfigFilePath(index) {
@@ -77,11 +77,11 @@ export class Devnet {
   }
 
   heimdallHeimdallConfigFilePath(index) {
-    return path.join(this.heimdallDir(index), 'config', 'heimdall-config.toml')
+    return path.join(this.heimdallDir(index), 'config', 'delivery-config.toml')
   }
 
   borDir(index) {
-    return path.join(this.nodeDir(index), 'bor')
+    return path.join(this.nodeDir(index), 'bttc')
   }
 
   borDataDir(index) {
@@ -89,7 +89,7 @@ export class Devnet {
   }
 
   borDataBorDir(index) {
-    return path.join(this.borDir(index), 'data', 'bor')
+    return path.join(this.borDir(index), 'data', 'bttc')
   }
 
   borKeystoreDir(index) {

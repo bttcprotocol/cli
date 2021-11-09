@@ -25,8 +25,8 @@ export class Heimdall {
 
     this.repositoryName = this.name
     this.repositoryBranch = options.repositoryBranch || 'master'
-    //this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/heimdall.git'
-    this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/delivery.git'
+    this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/heimdall.git'
+    //this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/delivery.git'
   }
 
   get name() {
@@ -73,7 +73,7 @@ export class Heimdall {
   }
 
   get heimdallHeimdallConfigFilePath() {
-    return path.join(this.heimdallConfigDir, 'heimdall-config.toml')
+    return path.join(this.heimdallConfigDir, 'delivery-config.toml')
   }
 
   get heimdallConfigFilePath() {
@@ -86,14 +86,14 @@ export class Heimdall {
 
   async print() {
     // print details
-    console.log(chalk.gray('Heimdall home') + ': ' + chalk.bold.green(this.heimdallDataDir))
-    console.log(chalk.gray('Heimdall genesis') + ': ' + chalk.bold.green(this.heimdallGenesisFilePath))
-    console.log(chalk.gray('Heimdall validator key') + ': ' + chalk.bold.green(this.heimdallValidatorKeyFilePath))
-    console.log(chalk.gray('Heimdall repo') + ': ' + chalk.bold.green(this.repositoryDir))
-    console.log(chalk.gray('Setup heimdall') + ': ' + chalk.bold.green('bash heimdall-start.sh'))
-    console.log(chalk.gray('Start heimdall rest-server') + ': ' + chalk.bold.green('bash heimdall-server-start.sh'))
-    console.log(chalk.gray('Start heimdall bridge') + ': ' + chalk.bold.green('bash heimdall-bridge-start.sh'))
-    console.log(chalk.gray('Reset heimdall') + ': ' + chalk.bold.green('bash heimdall-clean.sh'))
+    console.log(chalk.gray('Delivery home') + ': ' + chalk.bold.green(this.heimdallDataDir))
+    console.log(chalk.gray('Delivery genesis') + ': ' + chalk.bold.green(this.heimdallGenesisFilePath))
+    console.log(chalk.gray('Delivery validator key') + ': ' + chalk.bold.green(this.heimdallValidatorKeyFilePath))
+    console.log(chalk.gray('Delivery repo') + ': ' + chalk.bold.green(this.repositoryDir))
+    console.log(chalk.gray('Setup delivery') + ': ' + chalk.bold.green('bash delivery-start.sh'))
+    console.log(chalk.gray('Start delivery rest-server') + ': ' + chalk.bold.green('bash delivery-server-start.sh'))
+    console.log(chalk.gray('Start delivery bridge') + ': ' + chalk.bold.green('bash delivery-bridge-start.sh'))
+    console.log(chalk.gray('Reset delivery') + ': ' + chalk.bold.green('bash delivery-clean.sh'))
   }
 
   async account() {

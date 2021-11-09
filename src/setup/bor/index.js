@@ -20,9 +20,9 @@ export class Bor {
   constructor(config, options = {}) {
     this.config = config
 
-    this.repositoryName = 'bor'
+    this.repositoryName = 'bttc'
     this.repositoryBranch = options.repositoryBranch || 'master'
-    this.repositoryUrl = options.repositoryUrl || 'https://github.com/maticnetwork/bor'
+    this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/bttc'
 
     this.genesis = new Genesis(config)
   }
@@ -32,7 +32,7 @@ export class Bor {
   }
 
   get taskTitle() {
-    return 'Setup Bor'
+    return 'Setup Bttc'
   }
 
   get repositoryDir() {
@@ -44,7 +44,7 @@ export class Bor {
   }
 
   get borDataDir() {
-    return path.join(this.config.dataDir, 'bor')
+    return path.join(this.config.dataDir, 'bttc')
   }
 
   get keystoreDir() {
@@ -60,8 +60,8 @@ export class Bor {
   }
 
   async print() {
-    console.log(chalk.gray('Bor data') + ': ' + chalk.bold.green(this.borDataDir))
-    console.log(chalk.gray('Bor repo') + ': ' + chalk.bold.green(this.repositoryDir))
+    console.log(chalk.gray('Bttc data') + ': ' + chalk.bold.green(this.borDataDir))
+    console.log(chalk.gray('Bttc repo') + ': ' + chalk.bold.green(this.repositoryDir))
     console.log(chalk.gray('Setup bor chain') + ': ' + chalk.bold.green('bash bor-setup.sh'))
     console.log(chalk.gray('Start bor chain') + ': ' + chalk.bold.green('bash bor-start.sh'))
     console.log(chalk.gray('Clean bor chain') + ': ' + chalk.bold.green('bash bor-clean.sh'))
@@ -77,7 +77,7 @@ export class Bor {
         },
         {
           title: 'Build Bor',
-          task: () => execa('make', ['bor-all'], {
+          task: () => execa('make', ['bttc-all'], {
             cwd: this.repositoryDir
           })
         },

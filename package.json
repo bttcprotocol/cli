@@ -1,9 +1,9 @@
 {
-  "name": "@andylu1988/matic-cli",
+  "name": "@tronnetwork/bttc-cli",
   "version": "0.1.9",
   "description": "A CLI to setup and manage Matic validator nodes",
   "main": "src/index.js",
-  "bin": "bin/matic-cli",
+  "bin": "bin/bttc-cli",
   "publishConfig": {
     "access": "public"
   },
@@ -12,11 +12,13 @@
   },
   "keywords": [
     "cli",
-    "matic-cli"
+    "bttc-cli"
   ],
   "author": "Matic Tech Team <info@matic.network> (https://matic.network)",
   "license": "MIT",
   "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "boxen": "^4.2.0",
     "chalk": "^2.4.2",
     "commander": "^5.0.0",
@@ -30,6 +32,7 @@
     "inquirer": "^6.2.2",
     "listr": "^0.14.3",
     "moonwalker": "github:atvanguard/moonwalker",
+    "npm": "^6.14.15",
     "nunjucks": "^3.2.1",
     "pkg-install": "^0.2.0",
     "truffle-privatekey-provider": "^1.3.0",
