@@ -16,17 +16,17 @@ services:
     networks:
       - devnet-network
 
-  heimdall{{ node }}:
-    image: "maticnetwork/heimdall:{{ obj.config.heimdallBranch }}"
-    container_name: heimdall{{ node }}
+  delivery{{ node }}:
+    image: "bttcprotocol/delivery:{{ obj.config.heimdallBranch }}"
+    container_name: delivery{{ node }}
     depends_on:
       - rabbit{{ node }}
     networks:
       - devnet-network
     volumes:
-      - ./devnet/node{{ node }}/heimdalld:/root/.heimdalld
-      - ./devnet/node{{ node }}/heimdallcli:/root/.heimdallcli
-      - ./logs/node{{ node }}/heimdall:/root/heimdall/logs
+      - ./devnet/node{{ node }}/deliveryd:/root/.deliveryd
+      - ./devnet/node{{ node }}/deliverycli:/root/.deliverycli
+      - ./logs/node{{ node }}/delivery:/root/delivery/logs
     {% if node == 0 %}
     ports:
       - "1317:1317"
@@ -34,19 +34,19 @@ services:
       - "26656:26656"
     {% endif %}
   
-  bor{{ node }}:
-    image: "maticnetwork/bor:{{ obj.config.borBranch }}"
-    container_name: bor{{ node }}
+  bttc{{ node }}:
+    image: "bttcprotocol/bttc:{{ obj.config.borBranch }}"
+    container_name: bttc{{ node }}
     # depends_on:
-    #  - heimdall{{ node }}
+    #  - delivery{{ node }}
     networks:
       devnet-network:
           ipv4_address: 172.20.1.{{ node + 100 }}
     environment:
       - HEIMDALL_URL=http://heimdall{{ node }}:1317
     volumes:
-      - ./devnet/node{{ node }}/bor:/root/.bor
-      - ./logs/node{{ node }}/bor:/root/logs
+      - ./devnet/node{{ node }}/bttc:/root/.bttc
+      - ./logs/node{{ node }}/bttc:/root/logs
     {% if node == 0 %}
     ports:
       - "8545:8545"

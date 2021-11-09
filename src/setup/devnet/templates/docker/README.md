@@ -1,13 +1,13 @@
 # Devnet
 
-### Run multiple heimdall nodes
+### Run multiple delivery nodes
 
 ```bash
-# start heimdall0
-$ docker-compose up -d heimdall0
+# start delivery0
+$ docker-compose up -d delivery0
 
-# exec bash into heimdall0
-$ docker exec -i -t heimdall0 bash
+# exec bash into delivery0
+$ docker exec -i -t delivery0 bash
 ```
 
 **To access bash for all nodes**
@@ -22,23 +22,23 @@ $ bash tmux-docker.sh
 On docker container's shell:
 
 ```bash
-$ tail -f /root/heimdall/logs/heimdalld.log
+$ tail -f /root/delivery/logs/deliveryd.log
 ```
 
-### Run multiple bor nodes
+### Run multiple bttc nodes
 
 ```bash
 # setup all nodes
-$ bash docker-bor-setup.sh
+$ bash docker-bttc-setup.sh
 
 # start node
-$ bash docker-bor-start.sh 0 # for node 0
+$ bash docker-bttc-start.sh 0 # for node 0
 
 # start all nodes at once
-$ bash docker-bor-start-all.sh
+$ bash docker-bttc-start-all.sh
 ```
 
-### Clean Heimdall/Bor data and start fresh
+### Clean Heimdall/bttc data and start fresh
 
 ```bash
 $ bash docker-clean.sh
