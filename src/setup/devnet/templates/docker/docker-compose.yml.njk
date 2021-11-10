@@ -16,9 +16,9 @@ services:
     networks:
       - devnet-network
 
-  delivery{{ node }}:
+  heimdall{{ node }}:
     image: "bttcprotocol/delivery:{{ obj.config.heimdallBranch }}"
-    container_name: delivery{{ node }}
+    container_name: heimdall{{ node }}
     depends_on:
       - rabbit{{ node }}
     networks:
@@ -38,7 +38,7 @@ services:
     image: "bttcprotocol/bttc:{{ obj.config.borBranch }}"
     container_name: bttc{{ node }}
     # depends_on:
-    #  - delivery{{ node }}
+    #  - heimdall{{ node }}
     networks:
       devnet-network:
           ipv4_address: 172.20.1.{{ node + 100 }}
