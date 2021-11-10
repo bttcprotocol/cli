@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+INDEX=$1
+
+docker-compose run -d --service-ports --name delivery$INDEX delivery$INDEX sh -c "
+deliveryd start > ./logs/deliveryd.log 2>&1 &
+deliveryd rest-server > ./logs/rest-server.log 2>&1 &
+sleep 60 && bridge start --all > ./logs/bridge.log 2>&1 &
+tail -f ./logs/delivery.log ./logs/rest-server.log ./logs/bridge.log
+"
