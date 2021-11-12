@@ -1,19 +1,19 @@
 #!/usr/bin/env sh
 
 NODE_DIR=/data2/bttc/node
-BOR_HOME=$NODE_DIR/bttc
+BTTC_HOME=$NODE_DIR/bttc
 LOG_HOME=$NODE_DIR/logs
 
 # create heimdall file
-mkdir -p $BOR_HOME $LOG_HOME
+mkdir -p $BTTC_HOME $LOG_HOME
 
 # setup bor
-BOR_DATA_DIR=$BOR_HOME/data
-bttc --datadir $BOR_DATA_DIR init $BOR_HOME/genesis.json 
+BTTC_DATA_DIR=$BTTC_HOME/data
+bttc --datadir $BTTC_DATA_DIR init $BTTC_HOME/genesis.json 
 
 # copy bor files
-cp $BOR_HOME/nodekey $BOR_DATA_DIR/bttc/
-cp $BOR_HOME/static-nodes.json $BOR_DATA_DIR/
-cp $BOR_HOME/static-nodes.json $BOR_DATA_DIR/bttc/
+cp $BTTC_HOME/nodekey $BTTC_DATA_DIR/bttc/
+cp $BTTC_HOME/static-nodes.json $BTTC_DATA_DIR/
+cp $BTTC_HOME/static-nodes.json $BTTC_DATA_DIR/bttc/
 
 echo "Setup done!"%

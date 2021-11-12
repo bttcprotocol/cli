@@ -3,6 +3,6 @@
 set -x #echo on
 
 NODE_DIR=/data/bttc/node
-HEIMDALL_HOME_DIR=$NODE_DIR/heimdalld
+DELIVERY_HOME_DIR=$NODE_DIR/deliveryd
 
-bridge --home $HEIMDALL_HOME_DIR start --all --node http://0.0.0.0:26657
+bridge --home $DELIVERY_HOME_DIR start --all --node http://0.0.0.0:26657
