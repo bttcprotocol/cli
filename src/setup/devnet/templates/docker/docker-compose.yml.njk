@@ -15,6 +15,10 @@ services:
     container_name: rabbit{{ node }}
     networks:
       - devnet-network
+    {% if node == 0 %}
+    ports:
+      - "5672:5672"
+    {% endif %}
 
   heimdall{{ node }}:
     image: "bttcprotocol/delivery:{{ obj.config.heimdallBranch }}"
