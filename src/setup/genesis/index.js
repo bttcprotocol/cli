@@ -22,8 +22,8 @@ export class Genesis {
     this.repositoryBranch ='master'
     this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/genesis-contracts.git'
     //this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/contracts.git'
-    this.maticContractsRepository = 'bttc-contracts'
-    this.maticContractsRepositoryUrl = 'https://github.com/bttcprotocol/contracts.git'
+    this.bttcContractsRepository = 'bttc-contracts'
+    this.bttcContractsRepositoryUrl = 'https://github.com/bttcprotocol/contracts.git'
     this.bttcrepositoryBranch = config.contractsBranch || 'stake'
 
   }
@@ -40,8 +40,8 @@ export class Genesis {
     return path.join(this.config.codeDir, this.repositoryName)
   }
 
-  get maticContractDir() {
-    return path.join(this.config.codeDir, this.repositoryName, this.maticContractsRepository)
+  get bttcContractDir() {
+    return path.join(this.config.codeDir, this.repositoryName, this.bttcContractsRepository)
   }
 
   get bttcGenesisFilePath() {
@@ -82,27 +82,21 @@ export class Genesis {
         {
           title: 'change bttc-contracts branch',
           task: () => execa('git', ['checkout', this.bttcrepositoryBranch], {
-            cwd: this.maticContractDir
+            cwd: this.bttcContractDir
           })
         },
         {
-          title: 'Install dependencies for matic-contracts',
+          title: 'Install dependencies for bttc-contracts',
           task: () => projectInstall({
-            cwd: this.maticContractDir
+            cwd: this.bttcContractDir
           })
         },
         {
           title: 'Process templates',
           task: () => execa('npm', ['run', 'template:process', '--', '--bor-chain-id', this.config.bttcChainId], {
-            cwd: this.maticContractDir
+            cwd: this.bttcContractDir
           })
         },
-        // {
-        //   title: 'Compile matic-contracts',
-        //   task: () => execa('npm', ['run', 'truffle:compile'], {
-        //     cwd: this.maticContractDir
-        //   })
-        // },
         {
           title: 'Prepare validators for genesis file',
           task: () => {

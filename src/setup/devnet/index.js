@@ -337,7 +337,7 @@ export class Devnet {
             .save()
 
             fileReplacer(this.deliveryGenesisFilePath(i))
-              .replace(/"bttc_chain_id"[ ]*:[ ]*".*"/gi, `"bttc_chain_id": "${this.config.bttcChainId}"`)
+              .replace(/"bor_chain_id"[ ]*:[ ]*".*"/gi, `"bor_chain_id": "${this.config.bttcChainId}"`)
               .save()
           }
         }

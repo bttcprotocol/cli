@@ -1,11 +1,11 @@
-# Matic CLI
+# Bttc CLI
 
-🏗 A CLI to setup and manage Matic validator nodes 
+🏗 A CLI to setup and manage Bttc validator nodes 
 
 ### Installation
 
 ```bash
-npm install -g @maticnetwork/matic-cli
+npm install -g @bttcprotocol/bttc-cli
 ```
 
 Please make sure you have installed following dependencies:
@@ -29,7 +29,7 @@ $ cd localnet
 **Check commands**
 
 ```bash
-matic-cli
+bttc-cli
 ```
 
 **To setup 1 node local network**
@@ -37,7 +37,7 @@ matic-cli
 This will setup Delivery and Bttc.
 
 ```bash
-matic-cli setup localnet
+bttc-cli setup localnet
 ```
 
 It will ask you several questions:
@@ -45,9 +45,9 @@ It will ask you several questions:
 ```
 Please enter Bttc chain id - You can keep the default one (15001) or change it to any numeric id
 Please enter Delivery chain id - You can keep the default one (Delivery-15001) or change it to a regex (Delivery-<numeric id>)
-Please enter Bttc branch or tag - v0.2.5
-Please enter Delivery branch or tag - v0.2.1-mumbai
-Please enter Contracts branch or tag - Keep the default branch (v0.3.0-backport)
+Please enter Bttc branch or tag - master
+Please enter Delivery branch or tag - master
+Please enter Contracts branch or tag - Keep the default branch (master)
 ```
 
 After the setup is done, follow these steps:
@@ -85,7 +85,7 @@ bash bttc-start.sh
 **To setup multi-node local network**
 
 ```bash
-matic-cli setup devnet
+bttc-cli setup devnet
 ```
 
 It will ask you several questions:

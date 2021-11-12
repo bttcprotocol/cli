@@ -1,7 +1,7 @@
 {
   "name": "@tronnetwork/bttc-cli",
   "version": "0.1.9",
-  "description": "A CLI to setup and manage Matic validator nodes",
+  "description": "A CLI to setup and manage Bttc validator nodes",
   "main": "src/index.js",
   "bin": "bin/bttc-cli",
   "publishConfig": {
@@ -14,7 +14,7 @@
     "cli",
     "bttc-cli"
   ],
-  "author": "Matic Tech Team <info@matic.network> (https://matic.network)",
+  "author": "Bittorrent Tech Team <info@tron.network> (https://tron.network)",
   "license": "MIT",
   "dependencies": {
     "babel": "^6.23.0",

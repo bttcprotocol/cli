@@ -45,7 +45,7 @@ export class Contracts {
   cloneRepositoryTasks() {
     return [
       {
-        title: 'Clone matic contracts repository',
+        title: 'Clone delivery contracts repository',
         task: () => cloneRepository(this.repositoryName, this.repositoryBranch, this.repositoryUrl, this.config.codeDir)
       }
     ]
@@ -54,7 +54,7 @@ export class Contracts {
   compileTasks() {
     return [
       {
-        title: 'Install dependencies for matic contracts',
+        title: 'Install dependencies for bttc contracts',
         task: () => projectInstall({
           cwd: this.repositoryDir
         })
@@ -66,7 +66,7 @@ export class Contracts {
         })
       },
       {
-        title: 'Compile matic contracts',
+        title: 'Compile bttc contracts',
         task: () => execa('npm', ['run', 'truffle:compile'], {
           cwd: this.repositoryDir
         })
