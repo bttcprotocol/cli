@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+set -x #echo on
+
+DELIVERY_HOME_DIR={{ obj.deliveryDataDir }}
+BUILD_DIR={{ obj.buildDir }}
+
+$BUILD_DIR/deliveryd --home $DELIVERY_HOME_DIR unsafe-reset-all
+$BUILD_DIR/bridge --home $DELIVERY_HOME_DIR purge-queue
+rm -rf $DELIVERY_HOME_DIR/bridge

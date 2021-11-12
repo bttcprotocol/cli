@@ -3,7 +3,7 @@
 set -x #echo on
 
 ADDRESS={{ obj.config.primaryAccount.address }}
-BTTC_CHAIN_ID={{ obj.config.borChainId }}
+BTTC_CHAIN_ID={{ obj.config.bttcChainId }}
 
 if [ -z "$ADDRESS" ]
   then
@@ -11,7 +11,7 @@ if [ -z "$ADDRESS" ]
   exit 1
 fi
 
-if [ -z "$BOR_CHAIN_ID" ]
+if [ -z "$BTTC_CHAIN_ID" ]
   then
     echo "Chain id is required as second argument"
   exit 1
@@ -19,19 +19,19 @@ fi
 
 BUILD_DIR={{ obj.buildDir }}/bin
 DATA_DIR={{ obj.config.dataDir }}
-BTTC_DATA_DIR={{ obj.borDataDir }}
-GENESIS_PATH={{ obj.genesis.borGenesisFilePath }}
+BTTC_DATA_DIR={{ obj.bttcDataDir }}
+GENESIS_PATH={{ obj.genesis.bttcGenesisFilePath }}
 
 mkdir -p $DATA_DIR/logs
 
-$BUILD_DIR/bor --datadir $BTTC_DATA_DIR \
+$BUILD_DIR/bttc --datadir $BTTC_DATA_DIR \
   --port 30303 \
   --http --http.addr '0.0.0.0' \
   --http.vhosts '*' \
   --http.corsdomain '*' \
   --http.port 8545 \
   --http.api 'eth,net,web3,txpool' \
-  --ipcpath $BOR_DATA_DIR/bor.ipc \
+  --ipcpath $BTTC_DATA_DIR/bttc.ipc \
   --networkid $BTTC_CHAIN_ID \
   --miner.gasprice '0' \
   --keystore $DATA_DIR/keystore \

@@ -88,8 +88,8 @@ export default class Config {
     console.log(chalk.gray('Code directory') + ': ' + chalk.bold.green(this.codeDir))
     console.log(chalk.gray('Data directory') + ': ' + chalk.bold.green(this.dataDir))
     console.log(chalk.gray('Address') + ': ' + chalk.bold.green(this.primaryAccount.address))
-    console.log(chalk.gray('Bor Chain ID') + ': ' + chalk.bold.green(this.borChainId))
-    console.log(chalk.gray('Heimdall Chain ID') + ': ' + chalk.bold.green(this.heimdallChainId))
+    console.log(chalk.gray('Bttc Chain ID') + ': ' + chalk.bold.green(this.bttcChainId))
+    console.log(chalk.gray('Delivery Chain ID') + ': ' + chalk.bold.green(this.deliveryChainId))
   }
 }
 

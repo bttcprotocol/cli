@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+set -x #echo on
+
+DELIVERY_HOME_DIR={{ obj.deliveryDataDir }}
+BUILD_DIR={{ obj.buildDir }}
+
+$BUILD_DIR/deliveryd --home $DELIVERY_HOME_DIR start

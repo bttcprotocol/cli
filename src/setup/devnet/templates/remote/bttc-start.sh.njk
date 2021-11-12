@@ -5,13 +5,13 @@ BTTC_HOME=$NODE_DIR/bttc
 BTTC_DATA_DIR=$BTTC_HOME/data
 BTTC_CHAIN_ID=
 
-# create heimdall file
+# create delivery file
 mkdir -p $BTTC_HOME
 
 # get address
 ADDRESS="`cat $BTTC_HOME/address.txt`"
 
-# start bor
+# start bttc
 bttc --datadir $BTTC_DATA_DIR \
   --port 30303 \
   --bor.heimdall "http://localhost:1317" \

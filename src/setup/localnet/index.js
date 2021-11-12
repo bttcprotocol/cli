@@ -7,15 +7,15 @@ import { printDependencyInstructions, getDefaultBranch } from '../helper'
 import { loadConfig } from '../config'
 
 import { Genesis } from '../genesis'
-import { Heimdall } from '../heimdall'
+import { Delivery } from '../delivery'
 //import { Ganache } from '../ganache'
-import { Bor } from '../bor'
+import { Bttc } from '../bttc'
 import { processTemplateFiles } from '../../lib/utils'
 
 async function setupLocalnet(config) {
   //const ganache = new Ganache(config, { contractsBranch: config.contractsBranch })
-  const bor = new Bor(config, { repositoryBranch: config.borBranch })
-  const heimdall = new Heimdall(config, { repositoryBranch: config.heimdallBranch })
+  const bttc = new Bttc(config, { repositoryBranch: config.bttcBranch })
+  const delivery = new Delivery(config, { repositoryBranch: config.deliveryBranch })
   const genesis = new Genesis(config, { repositoryBranch: 'master' })
 
   const tasks = new Listr(
@@ -27,9 +27,9 @@ async function setupLocalnet(config) {
       //   }
       // },
       {
-        title: heimdall.taskTitle,
+        title: delivery.taskTitle,
         task: () => {
-          return heimdall.getTasks()
+          return delivery.getTasks()
         }
       },
       {
@@ -39,9 +39,9 @@ async function setupLocalnet(config) {
         }
       },
       {
-        title: bor.taskTitle,
+        title: bttc.taskTitle,
         task: () => {
-          return bor.getTasks()
+          return bttc.getTasks()
         }
       },
       {
@@ -72,8 +72,8 @@ async function setupLocalnet(config) {
   await config.print()
 
   await genesis.print()
-  await heimdall.print()
-  await bor.print()
+  await delivery.print()
+  await bttc.print()
 }
 
 export default async function () {

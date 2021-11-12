@@ -13,10 +13,10 @@ import { Genesis } from '../genesis'
 export const KEYSTORE_PASSWORD = 'hello'
 
 //
-// Bor setup class
+// Bttc setup class
 //
 
-export class Bor {
+export class Bttc {
   constructor(config, options = {}) {
     this.config = config
 
@@ -28,7 +28,7 @@ export class Bor {
   }
 
   get name() {
-    return 'bor'
+    return 'bttc'
   }
 
   get taskTitle() {
@@ -43,7 +43,7 @@ export class Bor {
     return path.join(this.repositoryDir, 'build')
   }
 
-  get borDataDir() {
+  get bttcDataDir() {
     return path.join(this.config.dataDir, 'bttc')
   }
 
@@ -60,11 +60,11 @@ export class Bor {
   }
 
   async print() {
-    console.log(chalk.gray('Bttc data') + ': ' + chalk.bold.green(this.borDataDir))
+    console.log(chalk.gray('Bttc data') + ': ' + chalk.bold.green(this.bttcDataDir))
     console.log(chalk.gray('Bttc repo') + ': ' + chalk.bold.green(this.repositoryDir))
-    console.log(chalk.gray('Setup bor chain') + ': ' + chalk.bold.green('bash bor-setup.sh'))
-    console.log(chalk.gray('Start bor chain') + ': ' + chalk.bold.green('bash bor-start.sh'))
-    console.log(chalk.gray('Clean bor chain') + ': ' + chalk.bold.green('bash bor-clean.sh'))
+    console.log(chalk.gray('Setup bttc chain') + ': ' + chalk.bold.green('bash bttc-setup.sh'))
+    console.log(chalk.gray('Start bttc chain') + ': ' + chalk.bold.green('bash bttc-start.sh'))
+    console.log(chalk.gray('Clean bttc chain') + ': ' + chalk.bold.green('bash bttc-clean.sh'))
     console.log(chalk.gray('config.dataDir') + ': ' + chalk.bold.green(this.config.dataDir))
   }
 
@@ -72,11 +72,11 @@ export class Bor {
     return new Listr(
       [
         {
-          title: 'Clone Bor repository',
+          title: 'Clone Bttc repository',
           task: () => cloneRepository(this.repositoryName, this.repositoryBranch, this.repositoryUrl, this.config.codeDir)
         },
         {
-          title: 'Build Bor',
+          title: 'Build Bttc',
           task: () => execa('make', ['bttc-all'], {
             cwd: this.repositoryDir
           })
@@ -84,7 +84,7 @@ export class Bor {
         {
           title: 'Prepare data directory',
           task: () => {
-            return execa('mkdir', ['-p', this.config.dataDir, this.borDataDir, this.keystoreDir], {
+            return execa('mkdir', ['-p', this.config.dataDir, this.bttcDataDir, this.keystoreDir], {
               cwd: this.config.targetDirectory
             })
           }
@@ -128,21 +128,21 @@ export class Bor {
   }
 }
 
-async function setupBor(config) {
-  const bor = new Bor(config)
+async function setupBttc(config) {
+  const bttc = new Bttc(config)
 
   const tasks = new Listr(
     [
       {
-        title: bor.genesis.taskTitle,
+        title: bttc.genesis.taskTitle,
         task: () => {
-          return bor.genesis.getTasks()
+          return bttc.genesis.getTasks()
         }
       },
       {
-        title: bor.taskTitle,
+        title: bttc.taskTitle,
         task: () => {
-          return bor.getTasks()
+          return bttc.getTasks()
         }
       }
     ],
@@ -152,12 +152,12 @@ async function setupBor(config) {
   )
 
   await tasks.run()
-  console.log('%s Bor is ready', chalk.green.bold('DONE'))
+  console.log('%s Bttc is ready', chalk.green.bold('DONE'))
 
   // print config
   await config.print()
-  await bor.genesis.print(config)
-  await bor.print()
+  await bttc.genesis.print(config)
+  await bttc.print()
 
   return true
 }
@@ -175,5 +175,5 @@ export default async function () {
   config.set(answers)
 
   // start setup
-  await setupBor(config)
+  await setupBttc(config)
 }

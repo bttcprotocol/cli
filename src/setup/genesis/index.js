@@ -44,12 +44,12 @@ export class Genesis {
     return path.join(this.config.codeDir, this.repositoryName, this.maticContractsRepository)
   }
 
-  get borGenesisFilePath() {
+  get bttcGenesisFilePath() {
     return path.join(this.repositoryDir, 'genesis.json')
   }
 
   async print() {
-    console.log(chalk.gray('Bor genesis path') + ': ' + chalk.bold.green(this.borGenesisFilePath))
+    console.log(chalk.gray('Bttc genesis path') + ': ' + chalk.bold.green(this.bttcGenesisFilePath))
   }
 
   // get genesis contact tasks
@@ -93,7 +93,7 @@ export class Genesis {
         },
         {
           title: 'Process templates',
-          task: () => execa('npm', ['run', 'template:process', '--', '--bor-chain-id', this.config.borChainId], {
+          task: () => execa('npm', ['run', 'template:process', '--', '--bor-chain-id', this.config.bttcChainId], {
             cwd: this.maticContractDir
           })
         },
@@ -131,9 +131,9 @@ export class Genesis {
           }
         },
         {
-          title: 'Generate Bor validator set',
+          title: 'Generate bttc validator set',
           task: () => execa('node', [
-            'generate-borvalidatorset.js', '--bor-chain-id', this.config.borChainId, '--heimdall-chain-id', this.config.heimdallChainId
+            'generate-borvalidatorset.js', '--bor-chain-id', this.config.bttcChainId, '--heimdall-chain-id', this.config.deliveryChainId
           ], {
             cwd: this.repositoryDir
           })
@@ -141,7 +141,7 @@ export class Genesis {
         {
           title: 'Generate genesis.json',
           task: () => execa('node', [
-            'generate-genesis.js', '--bor-chain-id', this.config.borChainId, '--heimdall-chain-id', this.config.heimdallChainId
+            'generate-genesis.js', '--bor-chain-id', this.config.bttcChainId, '--heimdall-chain-id', this.config.deliveryChainId
           ], {
             cwd: this.repositoryDir
           })

@@ -34,7 +34,7 @@ matic-cli
 
 **To setup 1 node local network**
 
-This will setup Heimdall and Bor.
+This will setup Delivery and Bttc.
 
 ```bash
 matic-cli setup localnet
@@ -43,10 +43,10 @@ matic-cli setup localnet
 It will ask you several questions:
 
 ```
-Please enter Bor chain id - You can keep the default one (15001) or change it to any numeric id
-Please enter Heimdall chain id - You can keep the default one (heimdall-15001) or change it to a regex (heimdall-<numeric id>)
-Please enter Bor branch or tag - v0.2.5
-Please enter Heimdall branch or tag - v0.2.1-mumbai
+Please enter Bttc chain id - You can keep the default one (15001) or change it to any numeric id
+Please enter Delivery chain id - You can keep the default one (Delivery-15001) or change it to a regex (Delivery-<numeric id>)
+Please enter Bttc branch or tag - v0.2.5
+Please enter Delivery branch or tag - v0.2.1-mumbai
 Please enter Contracts branch or tag - Keep the default branch (v0.3.0-backport)
 ```
 
@@ -57,29 +57,29 @@ Start ganache
 bash ganache-start.sh
 ```
 
-Start heimdall
+Start delivery
 ```bash
-bash heimdall-start.sh
+bash delivery-start.sh
 ```
 
-Start heimdall bridge
+Start delivery bridge
 ```bash
-bash heimdall-bridge-start.sh
+bash delivery-bridge-start.sh
 ```
 
-Start heimdall rest server
+Start delivery rest server
 ```bash
-bash heimdall-server-start.sh
+bash delivery-server-start.sh
 ```
 
-Setup bor
+Setup Bttc
 ```bash
-bash bor-setup.sh
+bash bttc-setup.sh
 ```
 
-Start bor
+Start bttc
 ```bash
-bash bor-start.sh
+bash bttc-start.sh
 ```
 
 **To setup multi-node local network**
@@ -91,10 +91,10 @@ matic-cli setup devnet
 It will ask you several questions:
 
 ```
-Please enter Bor chain id - You can keep the default one (15001) or change it to any numeric id
-Please enter Heimdall chain id - You can keep the default one (heimdall-15001) or change it to a regex (heimdall-<numeric id>)
-Please enter Bor branch or tag - v0.2.5
-Please enter Heimdall branch or tag - v0.2.1-mumbai
+Please enter Bttc chain id - You can keep the default one (15001) or change it to any numeric id
+Please enter delivery chain id - You can keep the default one (delivery-15001) or change it to a regex (delivery-<numeric id>)
+Please enter Bttc branch or tag - v0.2.5
+Please enter delivery branch or tag - v0.2.1-mumbai
 Please enter Contracts branch or tag - Keep the default branch (v0.3.0-backport)
 Please enter number of validator nodes - Input the number of validator nodes you want to run
 Please enter number of non-validator nodes - Input the number of sentry nodes you want to run
@@ -109,19 +109,19 @@ Start ganache
 bash docker-ganache-start.sh
 ```
 
-Start all heimdall instances (it will run all services - rabbitmq, heimdall, bridge, server)
+Start all delivery instances (it will run all services - rabbitmq, delivery, bridge, server)
 ```bash
-bash docker-heimdall-start-all.sh
+bash docker-delivery-start-all.sh
 ```
 
-Setup bor
+Setup bttc
 ```bash
-bash docker-bor-setup.sh
+bash docker-bttc-setup.sh
 ```
 
-Start bor
+Start bttc
 ```bash
-bash docker-bor-start-all.sh
+bash docker-bttc-start-all.sh
 ```
 
 **Logs**
@@ -130,16 +130,16 @@ Logs will be at `logs/` folder
 
 **SSH to docker containers through tmux**
 
-For Heimdall
+For delivery
 
 ```bash
-bash docker-heimdall-tmux.sh
+bash docker-delivery-tmux.sh
 ```
 
-For  Bor
+For  bttc
 
 ```bash
-bash docker-bor-tmux.sh
+bash docker-bttc-tmux.sh
 ```
 
 **Clean Setup**

@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+
+set -x #echo on
+
+BUILD_DIR={{ obj.buildDir }}/bin
+DATA_DIR={{ obj.config.dataDir }}
+BTTC_DATA_DIR={{ obj.bttcDataDir }}
+GENESIS_PATH={{ obj.genesis.bttcGenesisFilePath }}
+
+# create bttc, logs and keystore directory
+mkdir -p $DATA_DIR/logs
+
+# init bttc
+$BUILD_DIR/bttc --datadir $BTTC_DATA_DIR init $GENESIS_PATH
+
+echo "Setup done!"

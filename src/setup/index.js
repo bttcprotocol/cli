@@ -1,8 +1,8 @@
 import { Command } from 'commander'
 
-import heimdall from './heimdall'
+import delivery from './delivery'
 import genesis from './genesis'
-import bor from './bor'
+import bttc from './bttc'
 import localnet from './localnet'
 //import ganache from './ganache'
 import devnet from './devnet'
@@ -10,14 +10,14 @@ import devnet from './devnet'
 //
 // Add sub commands
 //
-const heimdallCmd = new Command('heimdall')
-heimdallCmd.action(heimdall)
+const deliveryCmd = new Command('delivery')
+deliveryCmd.action(delivery)
 
 const genesisCmd = new Command('genesis')
 genesisCmd.action(genesis)
 
-const borCmd = new Command('bor')
-borCmd.action(bor)
+const bttcCmd = new Command('bttc')
+bttcCmd.action(bttc)
 
 // const ganacheCmd = new Command('ganache')
 // ganacheCmd.action(ganache)
@@ -28,4 +28,4 @@ localnetCmd.action(localnet)
 const devnetCmd = new Command('devnet')
 devnetCmd.action(devnet)
 
-export default [heimdallCmd, genesisCmd, borCmd, localnetCmd, devnetCmd]
+export default [deliveryCmd, genesisCmd, bttcCmd, localnetCmd, devnetCmd]

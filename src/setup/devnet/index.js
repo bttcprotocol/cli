@@ -7,7 +7,7 @@ import fs from 'fs-extra'
 import nunjucks from 'nunjucks'
 import { toBuffer, privateToPublic, bufferToHex } from 'ethereumjs-util'
 
-import { Heimdall } from '../heimdall'
+import { Delivery } from '../delivery'
 //import { Ganache } from '../ganache'
 import { Genesis } from '../genesis'
 import { printDependencyInstructions, getDefaultBranch } from '../helper'
@@ -36,7 +36,7 @@ export class Devnet {
     return this.config.numOfValidators + this.config.numOfNonValidators
   }
 
-  get heimdallBuildDir() {
+  get deliveryBuildDir() {
     return path.join(this.config.targetDirectory, 'code/delivery/build')
   }
 
@@ -44,84 +44,86 @@ export class Devnet {
     return path.join(this.testnetDir, `node${index}`)
   }
 
-  heimdallDir(index) {
+  deliveryDir(index) {
     return path.join(this.nodeDir(index), 'deliveryd')
   }
 
-  heimdallConfigFilePath(index) {
-    return path.join(this.heimdallDir(index), 'config', 'config.toml')
+  deliveryConfigFilePath(index) {
+    return path.join(this.deliveryDir(index), 'config', 'config.toml')
   }
 
-  heimdallStartShellFilePath(index) {
+  deliveryStartShellFilePath(index) {
     return path.join(this.nodeDir(index), 'delivery-start.sh')
   }
+
   rabbitDockerFilePath(index) {
     return path.join(this.nodeDir(index), 'docker-compose.yml')
   }
-  heimdallServerStartShellFilePath(index) {
+
+  deliveryServerStartShellFilePath(index) {
     return path.join(this.nodeDir(index), 'delivery-server-start.sh')
   }
-  heimdallBridgeStartShellFilePath(index) {
+  deliveryBridgeStartShellFilePath(index) {
     return path.join(this.nodeDir(index), 'delivery-bridge-start.sh')
   }
 
-  borStartShellFilePath(index) {
+  bttcStartShellFilePath(index) {
     return path.join(this.nodeDir(index), 'bttc-start.sh')
   }
-  borSetupShellFilePath(index) {
+  bttcSetupShellFilePath(index) {
     return path.join(this.nodeDir(index), 'bttc-setup.sh')
   }
 
-  heimdallGenesisFilePath(index) {
-    return path.join(this.heimdallDir(index), 'config', 'genesis.json')
+  deliveryGenesisFilePath(index) {
+    return path.join(this.deliveryDir(index), 'config', 'genesis.json')
   }
 
-  heimdallHeimdallConfigFilePath(index) {
-    return path.join(this.heimdallDir(index), 'config', 'delivery-config.toml')
+  deliveryDeliveryConfigFilePath(index) {
+    return path.join(this.deliveryDir(index), 'config', 'delivery-config.toml')
   }
 
-  borDir(index) {
+  bttcDir(index) {
     return path.join(this.nodeDir(index), 'bttc')
   }
 
-  borDataDir(index) {
-    return path.join(this.borDir(index), 'data')
+  bttcDataDir(index) {
+    return path.join(this.bttcDir(index), 'data')
   }
 
-  borDataBorDir(index) {
-    return path.join(this.borDir(index), 'data', 'bttc')
+  bttcDataBttcDir(index) {
+    return path.join(this.bttcDir(index), 'data', 'bttc')
   }
 
-  borKeystoreDir(index) {
-    return path.join(this.borDir(index), 'keystore')
+  bttcKeystoreDir(index) {
+    return path.join(this.bttcDir(index), 'keystore')
   }
 
-  borGenesisFilePath(index) {
-    return path.join(this.borDir(index), 'genesis.json')
+  bttcGenesisFilePath(index) {
+    return path.join(this.bttcDir(index), 'genesis.json')
   }
 
-  borPasswordFilePath(index) {
-    return path.join(this.borDir(index), 'password.txt')
+  bttcPasswordFilePath(index) {
+    return path.join(this.bttcDir(index), 'password.txt')
   }
 
-  borPrivateKeyFilePath(index) {
-    return path.join(this.borDir(index), 'privatekey.txt')
+  bttcPrivateKeyFilePath(index) {
+    return path.join(this.bttcDir(index), 'privatekey.txt')
   }
 
-  borAddressFilePath(index) {
-    return path.join(this.borDir(index), 'address.txt')
+  bttcAddressFilePath(index) {
+    return path.join(this.bttcDir(index), 'address.txt')
   }
 
-  borNodeKeyPath(index) {
-    return path.join(this.borDir(index), 'nodekey')
+  bttcNodeKeyPath(index) {
+    return path.join(this.bttcDir(index), 'nodekey')
   }
 
-  borEnodeFilePath(index) {
-    return path.join(this.borDir(index), 'enode.txt')
+  bttcEnodeFilePath(index) {
+    return path.join(this.bttcDir(index), 'enode.txt')
   }
 
-  borStaticNodesPath(index) {
-    return path.join(this.borDir(index), 'static-nodes.json')
+  bttcStaticNodesPath(index) {
+    return path.join(this.bttcDir(index), 'static-nodes.json')
   }
 
   async getEnodeTask() {
@@ -136,8 +138,8 @@ export class Devnet {
           const pubKey = bufferToHex(privateToPublic(toBuffer(enodeObj.privateKey))).replace('0x', '')
 
           // draft enode
-          //const enode = `enode://${pubKey}@${this.config.devnetBorHosts[i]}:3030${i}`
-          const enode = `enode://${pubKey}@${this.config.devnetBorHosts[i]}:30303`
+          //const enode = `enode://${pubKey}@${this.config.devnetBttcHosts[i]}:3030${i}`
+          const enode = `enode://${pubKey}@${this.config.devnetBttcHosts[i]}:30303`
 
           // add into static nodes
           staticNodes.push(enode)
@@ -146,13 +148,13 @@ export class Devnet {
           const p = [
             // create nodekey file
             fs.writeFile(
-              this.borNodeKeyPath(i),
+              this.bttcNodeKeyPath(i),
               `${enodeObj.privateKey.replace('0x', '')}\n`,
               { mode: 0o600 }
             ),
             // create enode file
             fs.writeFile(
-              this.borEnodeFilePath(i),
+              this.bttcEnodeFilePath(i),
               `${enode}\n`,
               { mode: 0o600 }
             )
@@ -164,7 +166,7 @@ export class Devnet {
         const data = JSON.stringify(staticNodes, null, 2)
         for (let i = 0; i < this.totalNodes; i++) {
           await fs.writeFile(
-            this.borStaticNodesPath(i),
+            this.bttcStaticNodesPath(i),
             data,
             { mode: 0o600 }
           )
@@ -178,13 +180,16 @@ export class Devnet {
     return [
       enodeTask,
       {
-        title: 'Process Heimdall configs',
+        title: 'Process Delivery configs',
         task: async () => {
-          // set heimdall
+          // set delivery
           for (let i = 0; i < this.totalNodes; i++) {
-            fileReplacer(this.heimdallHeimdallConfigFilePath(i))
+            fileReplacer(this.deliveryDeliveryConfigFilePath(i))
               .replace(/eth_rpc_url[ ]*=[ ]*".*"/gi, `eth_rpc_url = "${this.config.ethURL}"`)
-              .replace(/bor_rpc_url[ ]*=[ ]*".*"/gi, `bor_rpc_url = "http://bor${i}:8545"`)
+              .replace(/bsc_rpc_url[ ]*=[ ]*".*"/gi, `bsc_rpc_url = "${this.config.bscURL}"`)
+              .replace(/tron_rpc_url[ ]*=[ ]*".*"/gi, `tron_rpc_url = "${this.config.troRpcURL}"`)
+              .replace(/tron_grid_url[ ]*=[ ]*".*"/gi, `tron_grid_url = "${this.config.tronGridURL}"`)
+              .replace(/bttc_rpc_url[ ]*=[ ]*".*"/gi, `bttc_rpc_url = "http://bttc${i}:8545"`)
               .replace(/amqp_url[ ]*=[ ]*".*"/gi, `amqp_url = "amqp://guest:guest@rabbit${i}:5672/"`)
               .replace(/span_poll_interval[ ]*=[ ]*".*"/gi, 'span_poll_interval = "0m15s"')
               .replace(/checkpoint_poll_interval[ ]*=[ ]*".*"/gi, 'checkpoint_poll_interval = "1m0s"')
@@ -198,9 +203,9 @@ export class Devnet {
           // get root contracts
           const rootContracts = this.config.contractAddresses.root
 
-          // set heimdall peers with devnet heimdall hosts
+          // set delivery peers with devnet delivery hosts
           for (let i = 0; i < this.totalNodes; i++) {
-            fileReplacer(this.heimdallGenesisFilePath(i))
+            fileReplacer(this.deliveryGenesisFilePath(i))
               .replace(/"matic_token_address":[ ]*".*"/gi, `"matic_token_address": "${rootContracts.tokens.TestToken}"`)
               .replace(/"staking_manager_address":[ ]*".*"/gi, `"staking_manager_address": "${rootContracts.StakeManagerProxy}"`)
               .replace(/"root_chain_address":[ ]*".*"/gi, `"root_chain_address": "${rootContracts.RootChainProxy}"`)
@@ -236,13 +241,16 @@ export class Devnet {
     return [
       enodeTask,
       {
-        title: 'Process Heimdall configs',
+        title: 'Process delivery configs',
         task: async () => {
-          // set heimdall
+          // set delivery
           for (let i = 0; i < this.totalNodes; i++) {
-            fileReplacer(this.heimdallHeimdallConfigFilePath(i))
-              .replace(/eth_rpc_url[ ]*=[ ]*".*"/gi, `eth_rpc_url = "${this.config.ethURL}"`)
-              .replace(/bor_rpc_url[ ]*=[ ]*".*"/gi, `bor_rpc_url = "http://localhost:854${i}"`)
+            fileReplacer(this.deliveryDeliveryConfigFilePath(i))
+            .replace(/eth_rpc_url[ ]*=[ ]*".*"/gi, `eth_rpc_url = "${this.config.ethURL}"`)
+            .replace(/bsc_rpc_url[ ]*=[ ]*".*"/gi, `bsc_rpc_url = "${this.config.bscURL}"`)
+            .replace(/tron_rpc_url[ ]*=[ ]*".*"/gi, `tron_rpc_url = "${this.config.tronRpcURL}"`)
+            .replace(/tron_grid_url[ ]*=[ ]*".*"/gi, `tron_grid_url = "${this.config.tronGridURL}"`)
+              .replace(/bttc_rpc_url[ ]*=[ ]*".*"/gi, `bttc_rpc_url = "http://localhost:8545"`)
               .replace(/amqp_url[ ]*=[ ]*".*"/gi, 'amqp_url = "amqp://guest:guest@localhost:5672/"')
               .save()
           }
@@ -284,9 +292,9 @@ export class Devnet {
             }
           })
           for (let i = 0; i < this.totalNodes; i++) {
-            fileReplacer(this.borStartShellFilePath(i))
+            fileReplacer(this.bttcStartShellFilePath(i))
             //.replace(/NODE_DIR=/gi, `NODE_DIR=${this.config.nodeDir}${i}`)
-            .replace(/BTTC_CHAIN_ID=/gi, `BTTC_CHAIN_ID=${this.config.borChainId}`) 
+            .replace(/BTTC_CHAIN_ID=/gi, `BTTC_CHAIN_ID=${this.config.bttcChainId}`) 
             .save()
           }
           
@@ -298,38 +306,38 @@ export class Devnet {
     ]
   }
 
-  async getCreateTestnetTask(heimdall) {
+  async getCreateTestnetTask(delivery) {
     return [
-      heimdall.cloneRepositoryTask(),
-      heimdall.buildTask(),
+      delivery.cloneRepositoryTask(),
+      delivery.buildTask(),
       {
-        title: 'Create testnet files for Heimdall',
+        title: 'Create testnet files for delivery',
         task: async () => {
           const args = [
             'create-testnet',
             '--v', this.config.numOfValidators,
             '--n', this.config.numOfNonValidators,
-            '--chain-id', this.config.heimdallChainId,
-            '--node-host-prefix', 'heimdall',
+            '--chain-id', this.config.deliveryChainId,
+            '--node-host-prefix', 'delivery',
             '--output-dir', 'devnet'
           ]
 
           // create testnet
-          await execa(heimdall.heimdalldCmd, args, {
+          await execa(delivery.deliverydCmd, args, {
             cwd: this.config.targetDirectory
           })
 
-          // set heimdall peers with devnet heimdall hosts
+          // set delivery peers with devnet delivery hosts
           for (let i = 0; i < this.totalNodes; i++) {
-            fileReplacer(this.heimdallConfigFilePath(i))
-            .replace(/heimdall([^:]+)/gi, (d, index) => {
-              return `${this.config.devnetHeimdallHosts[index]}`
+            fileReplacer(this.deliveryConfigFilePath(i))
+            .replace(/delivery([^:]+)/gi, (d, index) => {
+              return `${this.config.devnetDeliveryHosts[index]}`
             })             
-            .replace(/moniker.+=.+/gi, `moniker = "heimdall${i}"`)
+            .replace(/moniker.+=.+/gi, `moniker = "delivery${i}"`)
             .save()
 
-            fileReplacer(this.heimdallGenesisFilePath(i))
-              .replace(/"bor_chain_id"[ ]*:[ ]*".*"/gi, `"bor_chain_id": "${this.config.borChainId}"`)
+            fileReplacer(this.deliveryGenesisFilePath(i))
+              .replace(/"bttc_chain_id"[ ]*:[ ]*".*"/gi, `"bttc_chain_id": "${this.config.bttcChainId}"`)
               .save()
           }
         }
@@ -339,11 +347,11 @@ export class Devnet {
 
   async getTasks() {
     //const ganache = this.ganache
-    const heimdall = this.heimdall
+    const delivery = this.delivery
     const genesis = this.genesis
 
     // create testnet tasks
-    const createTestnetTasks = await this.getCreateTestnetTask(heimdall)
+    const createTestnetTasks = await this.getCreateTestnetTask(delivery)
 
     return new Listr(
       [
@@ -376,13 +384,13 @@ export class Devnet {
           }
         },
         {
-          title: 'Setup Bor keystore and genesis files',
+          title: 'Setup Bttc keystore and genesis files',
           task: async () => {
             const signerDumpData = this.signerDumpData
 
             for (let i = 0; i < this.totalNodes; i++) {
               // create directories
-              await execa('mkdir', ['-p', this.borDataDir(i), this.borKeystoreDir(i)])
+              await execa('mkdir', ['-p', this.bttcDataDir(i), this.bttcKeystoreDir(i)])
               const password = `password${i}`
 
               // create keystore files
@@ -390,26 +398,26 @@ export class Devnet {
               const p = [
                 // save password file
                 fs.writeFile(
-                  this.borPasswordFilePath(i),
+                  this.bttcPasswordFilePath(i),
                   `${password}\n`
                 ),
                 // save private key file
                 fs.writeFile(
-                  this.borPrivateKeyFilePath(i),
+                  this.bttcPrivateKeyFilePath(i),
                   `${signerDumpData[i].priv_key}\n`
                 ),
                 // save address file
                 fs.writeFile(
-                  this.borAddressFilePath(i),
+                  this.bttcAddressFilePath(i),
                   `${signerDumpData[i].address}\n`
                 ),
                 // save keystore file
                 fs.writeFile(
-                  path.join(this.borKeystoreDir(i), keystoreFileObj.keystoreFilename),
+                  path.join(this.bttcKeystoreDir(i), keystoreFileObj.keystoreFilename),
                   JSON.stringify(keystoreFileObj.keystore, null, 2)
                 ),
-                // copy genesis file to each node bor directory
-                execa('cp', [genesis.borGenesisFilePath, this.borGenesisFilePath(i)])
+                // copy genesis file to each node bttc directory
+                execa('cp', [genesis.bttcGenesisFilePath, this.bttcGenesisFilePath(i)])
               ]
               await Promise.all(p)
             }
@@ -452,7 +460,7 @@ export class Devnet {
 async function setupDevnet(config) {
   const devnet = new Devnet(config)
   //devnet.ganache = new Ganache(config, { contractsBranch: config.contractsBranch })
-  devnet.heimdall = new Heimdall(config, { repositoryBranch: config.heimdallBranch })
+  devnet.delivery = new Delivery(config, { repositoryBranch: config.deliveryBranch })
   devnet.genesis = new Genesis(config, { repositoryBranch: 'master' })
 
   const tasks = await devnet.getTasks()
@@ -524,6 +532,34 @@ export default async function () {
     })
   }
 
+  if (!('bscURL' in config)) {
+    questions.push({
+      type: 'input',
+      name: 'bscURL',
+      message: 'Please enter BSC url',
+      default: ''
+    })
+  }
+
+  if (!('tronRpcURL' in config)) {
+    questions.push({
+      type: 'input',
+      name: 'tronRpcURL',
+      message: 'Please enter TRON rpc url',
+      default: ''
+    })
+  }
+
+  if (!('tronGridURL' in config)) {
+    questions.push({
+      type: 'input',
+      name: 'tronGridURL',
+      message: 'Please enter TRON grid url',
+      default: ''
+    })
+  }
+
+
   if (!('devnetType' in config)) {
     questions.push({
       type: 'list',
@@ -540,20 +576,20 @@ export default async function () {
   config.set(answers)
 
   // set devent hosts
-  let devnetBorHosts = []
-  let devnetHeimdallHosts = []
+  let devnetBttcHosts = []
+  let devnetDeliveryHosts = []
   const totalValidators = config.numOfValidators + config.numOfNonValidators
   if (config.devnetType === 'docker') {
     [...Array(totalValidators).keys()].forEach((i) => {
-      devnetBorHosts.push(`172.20.1.${i + 100}`)
-      devnetHeimdallHosts.push(`heimdall${i}`)
+      devnetBttcHosts.push(`172.20.1.${i + 100}`)
+      devnetDeliveryHosts.push(`delivery${i}`)
     })
   } else {
     const hosts = await getHosts(totalValidators)
-    devnetBorHosts = hosts
-    devnetHeimdallHosts = hosts
+    devnetBttcHosts = hosts
+    devnetDeliveryHosts = hosts
   }
-  config.set({ devnetBorHosts, devnetHeimdallHosts })
+  config.set({ devnetBttcHosts: devnetBttcHosts, devnetDeliveryHosts: devnetDeliveryHosts })
 
   // start setup
   await setupDevnet(config)

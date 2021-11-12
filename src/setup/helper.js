@@ -19,19 +19,19 @@ Please make sure you have installed following dependencies:
 export async function getChainIds(options = {}) {
   const questions = []
 
-  if (!options.borChainId) {
+  if (!options.bttcChainId) {
     questions.push({
       type: 'input',
-      name: 'borChainId',
+      name: 'bttcChainId',
       message: 'Please enter Bttc chain id',
       default: '15001'
     })
   }
 
-  if (!options.heimdallChainId) {
+  if (!options.deliveryChainId) {
     questions.push({
       type: 'input',
-      name: 'heimdallChainId',
+      name: 'deliveryChainId',
       message: 'Please enter Delivery chain id',
       default: 'delivery-15001'
     })
@@ -49,19 +49,19 @@ export async function getChainIds(options = {}) {
 export async function getDefaultBranch(options = {}) {
   const questions = []
 
-  if (!options.borBranch) {
+  if (!options.bttcBranch) {
     questions.push({
       type: 'input',
-      name: 'borBranch',
+      name: 'bttcBranch',
       message: 'Please enter Bttc branch or tag',
       default: 'v0.2.8'
     })
   }
 
-  if (!options.heimdallBranch) {
+  if (!options.deliveryBranch) {
     questions.push({
       type: 'input',
-      name: 'heimdallBranch',
+      name: 'deliveryBranch',
       message: 'Please enter Delivery branch or tag',
       default: 'master'
     })
