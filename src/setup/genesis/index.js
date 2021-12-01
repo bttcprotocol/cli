@@ -20,7 +20,7 @@ export class Genesis {
 
     this.repositoryName = this.name
     this.repositoryBranch ='master'
-    this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/genesis-contracts.git'
+    this.repositoryUrl = options.repositoryUrl || 'http://39.106.174.213/BitTorrentChain/genesis-contracts.git'
     //this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/contracts.git'
     this.bttcContractsRepository = 'bttc-contracts'
     this.bttcContractsRepositoryUrl = 'https://github.com/bttcprotocol/contracts.git'
