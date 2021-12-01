@@ -52,11 +52,6 @@ Please enter Contracts branch or tag - Keep the default branch (master)
 
 After the setup is done, follow these steps:
 
-Start ganache
-```bash
-bash ganache-start.sh
-```
-
 Start delivery
 ```bash
 bash delivery-start.sh
@@ -104,10 +99,6 @@ Please select devnet type - docker (for docker setup)
 
 After the setup is done, follow these steps:
 
-Start ganache
-```bash
-bash docker-ganache-start.sh
-```
 
 Start all delivery instances (it will run all services - rabbitmq, delivery, bridge, server)
 ```bash
