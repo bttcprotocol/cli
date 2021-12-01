@@ -25,8 +25,7 @@ export class Delivery {
 
     this.repositoryName = this.name
     this.repositoryBranch = options.repositoryBranch || 'master'
-    this.repositoryUrl = options.repositoryUrl || 'http://luxueqing:123456Aa@39.106.174.213/BitTorrentChain/heimdall.git'
-    //this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/delivery.git'
+    this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/delivery.git'
   }
 
   get name() {
