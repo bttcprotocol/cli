@@ -5,7 +5,7 @@
 ### Installation
 
 ```bash
-npm install -g @bttcprotocol/bttc-cli
+npm install -g @bttcnetwork/bttc-cli
 ```
 
 Please make sure you have installed following dependencies:
