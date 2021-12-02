@@ -20,11 +20,10 @@ export class Genesis {
 
     this.repositoryName = this.name
     this.repositoryBranch ='master'
-    this.repositoryUrl = options.repositoryUrl || 'http://39.106.174.213/BitTorrentChain/genesis-contracts.git'
-    //this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/contracts.git'
+    this.repositoryUrl = options.repositoryUrl || 'https://github.com/bttcprotocol/genesis-contracts'
     this.bttcContractsRepository = 'bttc-contracts'
     this.bttcContractsRepositoryUrl = 'https://github.com/bttcprotocol/contracts.git'
-    this.bttcrepositoryBranch = config.contractsBranch || 'stake'
+    this.bttcContractsRepositoryBranch = config.contractsBranch || 'stake'
 
   }
 
@@ -81,7 +80,7 @@ export class Genesis {
         },
         {
           title: 'change bttc-contracts branch',
-          task: () => execa('git', ['checkout', this.bttcrepositoryBranch], {
+          task: () => execa('git', ['checkout', this.bttcContractsRepositoryBranch], {
             cwd: this.bttcContractDir
           })
         },
@@ -154,7 +153,7 @@ export async function getGenesisAddresses() {
       type: 'input',
       name: 'genesisAddresses',
       message: 'Please enter comma separated validator addresses',
-      default: '0x6c468CF8c9879006E22EC4029696E005C2319C9D',
+      default: '0xfA841eAAcf03598bAadF0266eF6097C654DE5465',
       validate: (input) => {
         const addrs = input.split(',').map(a => {
           return a.trim().toLowerCase()
