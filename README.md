@@ -12,7 +12,7 @@ Please make sure you have installed following dependencies:
 
 * Git
 * Node/npm v10.17.0 (or higher)
-* Go 1.13+
+* Go 1.16.4
 * Rabbitmq (Latest stable version)
 * Solc v0.5.11 (https://solidity.readthedocs.io/en/v0.5.3/installing-solidity.html#binary-packages)
 * Ganache CLI (https://www.npmjs.com/package/ganache-cli)
@@ -47,7 +47,7 @@ Please enter Bttc chain id - You can keep the default one (15001) or change it t
 Please enter Delivery chain id - You can keep the default one (Delivery-15001) or change it to a regex (Delivery-<numeric id>)
 Please enter Bttc branch or tag - master
 Please enter Delivery branch or tag - master
-Please enter Contracts branch or tag - Keep the default branch (master)
+Please enter Contracts branch or tag - Keep the default branch (stake)
 ```
 
 After the setup is done, follow these steps:
@@ -88,9 +88,9 @@ It will ask you several questions:
 ```
 Please enter Bttc chain id - You can keep the default one (15001) or change it to any numeric id
 Please enter delivery chain id - You can keep the default one (delivery-15001) or change it to a regex (delivery-<numeric id>)
-Please enter Bttc branch or tag - v0.2.5
-Please enter delivery branch or tag - v0.2.1-mumbai
-Please enter Contracts branch or tag - Keep the default branch (v0.3.0-backport)
+Please enter Bttc branch or tag - master
+Please enter delivery branch or tag - master
+Please enter Contracts branch or tag - Keep the default branch(stake)
 Please enter number of validator nodes - Input the number of validator nodes you want to run
 Please enter number of non-validator nodes - Input the number of sentry nodes you want to run
 Please enter ETH url - http://ganache:9545
