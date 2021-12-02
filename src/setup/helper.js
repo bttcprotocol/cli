@@ -53,7 +53,7 @@ export async function getDefaultBranch(options = {}) {
       type: 'input',
       name: 'bttcBranch',
       message: 'Please enter Bttc branch or tag',
-      default: 'v0.2.8'
+      default: 'master'
     })
   }
 
