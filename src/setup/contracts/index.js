@@ -60,7 +60,7 @@ export class Contracts {
       },
       {
         title: 'Process templates',
-        task: () => execa('npm', ['run', 'template:process', '--', '--bor-chain-id', this.config.bttcChainId], {
+        task: () => execa('npm', ['run', 'template:process', '--', '--bttc-chain-id', this.config.bttcChainId], {
           cwd: this.repositoryDir
         })
       },

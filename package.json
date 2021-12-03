@@ -1,6 +1,6 @@
 {
   "name": "@bttcnetwork/bttc-cli",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "A CLI to setup and manage Bttc validator nodes",
   "main": "src/index.js",
   "bin": "bin/bttc-cli",

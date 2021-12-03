@@ -39,7 +39,7 @@ export class Genesis {
     return path.join(this.config.codeDir, this.repositoryName)
   }
 
-  get bttcContractDir() {
+  get bttcContractsDir() {
     return path.join(this.config.codeDir, this.repositoryName, this.bttcContractsRepository)
   }
 
@@ -81,19 +81,19 @@ export class Genesis {
         {
           title: 'change bttc-contracts branch',
           task: () => execa('git', ['checkout', this.bttcContractsRepositoryBranch], {
-            cwd: this.bttcContractDir
+            cwd: this.bttcContractsDir
           })
         },
         {
           title: 'Install dependencies for bttc-contracts',
           task: () => projectInstall({
-            cwd: this.bttcContractDir
+            cwd: this.bttcContractsDir
           })
         },
         {
           title: 'Process templates',
-          task: () => execa('npm', ['run', 'template:process', '--', '--bor-chain-id', this.config.bttcChainId], {
-            cwd: this.bttcContractDir
+          task: () => execa('npm', ['run', 'template:process', '--', '--bttc-chain-id', this.config.bttcChainId], {
+            cwd: this.bttcContractsDir
           })
         },
         {
@@ -126,7 +126,7 @@ export class Genesis {
         {
           title: 'Generate bttc validator set',
           task: () => execa('node', [
-            'generate-borvalidatorset.js', '--bor-chain-id', this.config.bttcChainId, '--heimdall-chain-id', this.config.deliveryChainId
+            'generate-borvalidatorset.js', '--bttc-chain-id', this.config.bttcChainId, '--delivery-chain-id', this.config.deliveryChainId
           ], {
             cwd: this.repositoryDir
           })
@@ -134,7 +134,7 @@ export class Genesis {
         {
           title: 'Generate genesis.json',
           task: () => execa('node', [
-            'generate-genesis.js', '--bor-chain-id', this.config.bttcChainId, '--heimdall-chain-id', this.config.deliveryChainId
+            'generate-genesis.js', '--bttc-chain-id', this.config.bttcChainId, '--delivery-chain-id', this.config.deliveryChainId
           ], {
             cwd: this.repositoryDir
           })
