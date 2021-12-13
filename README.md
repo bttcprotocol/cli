@@ -15,7 +15,6 @@ Please make sure you have installed following dependencies:
 * Go 1.16.4
 * Rabbitmq (Latest stable version)
 * Solc v0.5.11 (https://solidity.readthedocs.io/en/v0.5.3/installing-solidity.html#binary-packages)
-* Ganache CLI (https://www.npmjs.com/package/ganache-cli)
 
 ### Usage
 
@@ -43,8 +42,8 @@ bttc-cli setup localnet
 It will ask you several questions:
 
 ```
-Please enter Bttc chain id - You can keep the default one (15001) or change it to any numeric id
-Please enter Delivery chain id - You can keep the default one (Delivery-15001) or change it to a regex (Delivery-<numeric id>)
+Please enter Bttc chain id - You can keep the default one (1029) or change it to any numeric id
+Please enter Delivery chain id - You can keep the default one (delivery-1029) or change it to a regex (Delivery-<numeric id>)
 Please enter Bttc branch or tag - master
 Please enter Delivery branch or tag - master
 Please enter Contracts branch or tag - Keep the default branch (stake)
@@ -93,45 +92,41 @@ Please enter delivery branch or tag - master
 Please enter Contracts branch or tag - Keep the default branch(stake)
 Please enter number of validator nodes - Input the number of validator nodes you want to run
 Please enter number of non-validator nodes - Input the number of sentry nodes you want to run
-Please enter ETH url - http://ganache:9545
-Please select devnet type - docker (for docker setup)
+Please enter ETH url - https://goerli.infura.io/v3/<YOUR_INFURA_KEY>
+Please select devnet type - remote (for remote setup)
 ```
 
 After the setup is done, follow these steps:
 
 
-Start all delivery instances (it will run all services - rabbitmq, delivery, bridge, server)
+Start delivery
 ```bash
-bash docker-delivery-start-all.sh
+bash delivery-start.sh
 ```
 
-Setup bttc
+Start delivery bridge
 ```bash
-bash docker-bttc-setup.sh
+bash delivery-bridge-start.sh
+```
+
+Start delivery rest server
+```bash
+bash delivery-server-start.sh
+```
+
+Setup Bttc
+```bash
+bash bttc-setup.sh
 ```
 
 Start bttc
 ```bash
-bash docker-bttc-start-all.sh
+bash bttc-start.sh
 ```
 
 **Logs**
 
 Logs will be at `logs/` folder
-
-**SSH to docker containers through tmux**
-
-For delivery
-
-```bash
-bash docker-delivery-tmux.sh
-```
-
-For  bttc
-
-```bash
-bash docker-bttc-tmux.sh
-```
 
 **Clean Setup**
 Remove the localnet folder and you can start the process once again
