@@ -85,8 +85,8 @@ bttc-cli setup devnet
 It will ask you several questions:
 
 ```
-Please enter Bttc chain id - You can keep the default one (15001) or change it to any numeric id
-Please enter delivery chain id - You can keep the default one (delivery-15001) or change it to a regex (delivery-<numeric id>)
+Please enter Bttc chain id - You can keep the default one (1029) or change it to any numeric id
+Please enter delivery chain id - You can keep the default one (delivery-1029) or change it to a regex (delivery-<numeric id>)
 Please enter Bttc branch or tag - master
 Please enter delivery branch or tag - master
 Please enter Contracts branch or tag - Keep the default branch(stake)
