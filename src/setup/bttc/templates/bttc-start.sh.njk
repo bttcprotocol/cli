@@ -37,6 +37,8 @@ $BUILD_DIR/bttc --datadir $BTTC_DATA_DIR \
   --keystore $DATA_DIR/keystore \
   --unlock $ADDRESS \
   --password $DATA_DIR/password.txt \
+  --gpo.maxprice 500000000000000 \
+  --rpc.txfeecap 0 \
   --allow-insecure-unlock \
   --maxpeers 200 \
   --metrics \
